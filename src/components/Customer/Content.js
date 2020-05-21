@@ -172,11 +172,11 @@ exportExcel = () =>{
 	var data = {};
 	if(this.props.ontap.room.display == 'show-alert')
 	{
-		data = {board : 'areas'}
+		data = {board : 'suppliers'}
 	}
 	else
 	{
-		data = {board : 'tables'}
+		data = {board : 'customers'}
 	}
 	export_Data.export_Data(data)
 

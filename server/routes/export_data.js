@@ -1,6 +1,6 @@
 var xl = require('excel4node');
 
-exports.export_data = function export_data(board,res,pool)
+exports.export_data = function(board,res,pool)
 {
     console.log('export');
     var sql = "SELECT * FROM "+board+"";// Thực hiện câu truy vấn và show dữ liệu
