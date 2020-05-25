@@ -1,91 +1,128 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
+import * as Types from './../../constants/ActionType'
+
+import { connect } from 'react-redux';
+//import {acFetchTableRequest, acDeleteProductsRequest} from './../../actions/index';
 
 // import './../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 // import './../../../node_modules/bootstrap/dist/js/bootstrap.min';
-import { connect } from 'react-redux';
 
-
-import ListRoom from './ListCustomer'
+import Listcustomer from './ListCustomer';
+import ListPagination from  './ListPagination_C'
 import * as action from '../../actions/index';
 
 
 
-
-
-
-class Room extends Component {
-	shouldComponentUpdate(nextProps, nextState)
-	{
-   if(nextProps.search.onSearch == this.props.search.onSearch )
-		{
-      return false;
-    }
-    return true;
-	}
-
-	  onChange = (event, callback) =>{
-		var target = event.target;
-		var value = target.value;
-		this.props.onChangeSearch({type : {
-			inputsearch : {
-				type : 'CHANGE_ROOM_NAME_SEARCH',
-				data : value
-			}
-		}})
-		// if(callback)
-		// {
-		// 	setTimeout(()=>{callback({name : this.props.search.onSearch})}, );
-			
-		// }
-		if(callback){
+class Table extends Component {
+// 	shouldComponentUpdate(nextProps, nextState)
+// 	{
+//    if((JSON.stringify(nextProps.status)== JSON.stringify(this.props.status)) && (JSON.stringify(nextProps.room)== JSON.stringify(this.props.room))
+//    && (this.props.event.table == nextProps.event.table) && (this.props.event.room == nextProps.event.room) &&(this.props.event.status == nextProps.event.status)
+//    )
+// 		{
+//       return false;
+//     }
+//     return true;
+// 	}
+	  ListStatus = (listArray) =>{
+		var result  = null;
+		if(listArray.length > 0){
+		  result = listArray.map((status, index) =>{
+			return (
+			<option value={status.Id_stt}>{status.name}</option>
+			)
+		  })
+		}
+		return result;
+	  }
+	  ListRoom = (listArray) =>{
+		var result  = null;
+		if(listArray.length > 0){
+		  result = listArray.map((room, index) =>{
+			return (
+			<option value={room.IdArea}>{room.BranchName}</option>
+			)
+		  })
+		}
+		return result;
+	  }
+   
+	  onChange = (object, callback)=>{
+		  this.props.onChangeTable(object)
+		 
+		  if(callback){
 			setTimeout(callback,)
 		  }
-   
-	}
-	
-	
+
+	  }
   render() 
+  
   {
-	
+     console.log('table')
+  
     return (
     <div>
          <div class="row filter-search margin-search">
 	<div class="col-md-5 form-group">
-		<input 
-		type="text" 
-		name="name"
-		 value = {this.props.search.onSearch}
-		 onChange = {(e) =>{this.onChange(e, ()=>{
-			 this.props.onsearchRoom({name : this.props.search.onSearch,
-			type : 'ROOM'})
-		 })}}
-		placeholder="Nhập mã hoặc tên phòng" 
-		class="form-control size-group"/>
-	</div>
+		<input type="text" name="txtproductname" 
+		value = {this.props.form.id_name_search_customer}
+		onChange = {(e)=>{
+			this.onChange({type :{
+				onchange_id_name_search_customer :{
+					type :Types.CHANGE_ID_NAME_SEARCH_CUSTOMER,
+					text : e.target.value
+				}
+			}}, ()=>{
+				this.props.fetchAllTables({index : 1,
+					id : this.props.form.id_name_search_customer,
+                    debit : Number(this.props.form.debit_search_customer),
+                         
+				type : 'CUSTOMER'})
+		  
+									})
+			
 
+		}} placeholder="Nhập mã hoặc tên nhà cung cấp" class="form-control size-group"/>
+	</div>
+	<div class="col-md-2 form-group p-0">
+		<select
+	
+
+		value = {this.props.form.debit_search_customer}
+		onChange = {(e)=>{
+			this.onChange({type :{
+				onchange_debit_search_customer :{
+					type : Types.CHANGE_DEBIT_SEARCH_CUSTOMER,
+					text : e.target.value
+				}
+			}}, ()=>{
+				this.props.fetchAllTables({index : 1,
+					id : this.props.form.id_name_search_customer,
+                    debit : Number(this.props.form.debit_search_customer),
+                         
+				type : 'CUSTOMER'})
+		  
+									})
+		
+
+		}}
+		 class="form-control size-group"    >
+						<option value = '0'>Tất cả</option>
+
+						<option value = '1'>Còn nợ</option>
+
+		</select>
+	</div>
+	
 	<div class="col-md-3 form-group">
-		<button class="btn btn-primary size-group disabled " disabled><i class="fa fa-search" aria-hidden="true"></i> Tìm</button>
+		<button class='btn btn-primary size-group'  
+	disabled>
+		<i class="fa fa-search" aria-hidden="true"></i> Tìm</button>
+		
+
 	</div>
-	
 </div> 
-{/* <div class="row filter-search margin-search">
-	<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
-		<input type="text" name="txtwarehousing" class="form-control size-group" placeholder="Nhập mã phiếu nhập để tìm kiếm"/>
-	</div>
-	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-		<div class="input-group flex">
-			<input type="date" class="form-control size-group"/>
-	        <div  className="from">
-	          <span >Đến</span>
-	        </div>
-        	<input type="date" class="form-control size-group" />
-      	</div>
-	</div>
-	<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 form-group">
-		<button class="btn btn-primary size-button"><i class="fa fa-search" aria-hidden="true"></i> Tìm</button>
-	</div>
-	
-</div> */}
+
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-table">
 	
@@ -98,19 +135,26 @@ class Room extends Component {
 				<div class="table-responsive">
 					<table class="table table-bordered table-hover">
 						<thead>
+						
 							<tr>
 								<th>STT</th>
-								<th>Mã Phòng / Tầng</th>
-                                <th>Tên Phòng / Tầng</th>
+								<th>Mã Khách Hàng</th>
+                                <th>Tên Khách Hàng</th>
+								<th>Số Điện Thoại</th>
+								<th>Email</th>
+
+								<th>Địa Chỉ</th>
+								<th>Ngày Sinh</th>
+								<th>Ghi Nợ</th>
+								<th>Ảnh Đại Diện</th>
+								<th>Chú Thích</th>
 								<th>Hành Động</th>
 
-							</tr>
-						</thead>
 
-							
-								<ListRoom/>
-							
-					
+							</tr>
+						
+						</thead>
+						<Listcustomer/>
 					</table>
 				</div>
 				
@@ -120,31 +164,47 @@ class Room extends Component {
 	</div>
 	
 	
-	
+	<ListPagination/>
 </div> 
 </div>
     );
   }
 }
 
-const  mapStateToProps = state =>{
+  
 
+const  mapStateToProps = state =>{
   
 	return{
-	 search : state.formcustomer
-	}
-  };
-const mapDispatchToProps = (dispatch, props) =>{
-	
-  return {
-	onsearchRoom : (id) =>{
-	  dispatch(action.acSearchRoomsRequest(id))
-	},
-	onChangeSearch : (id) =>{
-		dispatch(id)
+	  event : state.event,
+	  room : state.rooms,
+	  form : state.form_onChange,
+	  status : state.stttable
+
 	}
   }
-}
+  
+  
+  const mapDispatchToProps = (dispatch, props) =>{
+	return {
+		fetchAllTables : (index) =>{
+			dispatch(action.acFetchCustomerRequest(index));
+		   
+		  },
+	  onChangeTable : (object) =>{
 
+		dispatch(object);
+	  },
+	  onSearchTable : (object,index) =>{
 
-export default connect(mapStateToProps,mapDispatchToProps)(Room);
+		dispatch(action.acSearchTablesRequest(object,index));
+	  },
+	 
+	  changefornavigation : (index) =>{
+		dispatch(index)
+	  }
+	}
+  }
+  
+  
+  export default connect(mapStateToProps,mapDispatchToProps)(Table);

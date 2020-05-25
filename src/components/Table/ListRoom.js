@@ -27,6 +27,7 @@ class ListRoom extends Component {
     this.props.onDeleteRoom(id)
   }
     componentWillMount(){
+      console.log('roomwill')
       this.props.fetchAllRooms({type :  'ROOM'});
 
     }

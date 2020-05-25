@@ -26,25 +26,50 @@ class Content extends Component {
 // 	}
  submit = (statusEvent, callbackError)=>{
 
-	if(logic.logic_Before_Sentdata([this.props.form.room, this.props.form.name]) == true)
+	if(logic.logic_Before_Sentdata([]) == true)
 	{
 		
-		var parseJson = {
-			id : this.props.form.room,
-			value : this.props.form.name,
-			type : 'ROOM'
-		};
+		
 		
 		if(statusEvent == true)
 		{
-			this.props.onInsertRoom(parseJson, statusEvent);
+			this.props.onInsertRoom({
+				idcustomer : this.props.form.idcustomer,
+					namecustomer :this.props.form.namecustomer,
+					emailcustomer :this.props.form.emailcustomer,
+					phonecustomer : this.props.form.phonecustomer,
+					addresscustomer :this.props.form.addresscustomer,
+					birthdaycustomer :this.props.form.birthdaycustomer,
+
+					notecustomer : this.props.form.notecustomer,
+					debitcustomer :this.props.form.debitcustomer,
+					avatarcustomer : this.props.form.avatarcustomer,
+					id : this.props.form.id_name_search_customer,
+                                debit : Number(this.props.form.debit_search_customer),
+                              
+					 index : 1,
+				type : 'CUSTOMER'
+			});
 		}
 		else{
-			this.props.onInsertRoom({id : this.props.form.id,
-									idarea : this.props.form.room,
-									name : this.props.form.name,
-									type : 'ROOM'
-			}, statusEvent);
+			this.props.updateCustomer({
+				idcustomer : this.props.form.idcustomer,
+					namecustomer :this.props.form.namecustomer,
+					emailcustomer :this.props.form.emailcustomer,
+					phonecustomer : this.props.form.phonecustomer,
+					addresscustomer :this.props.form.addresscustomer,
+					birthdaycustomer :this.props.form.birthdaycustomer,
+					notecustomer : this.props.form.notecustomer,
+					debitcustomer :this.props.form.debitcustomer,
+					indexcustomer : this.props.form.indexcustomer,
+
+					avatarcustomer : this.props.form.avatarcustomer,
+					id : this.props.form.id_name_search_customer,
+                                debit : Number(this.props.form.debit_search_customer),
+                              
+					 index : 1,
+				type : 'CUSTOMER'
+			});
 		}
 	}
 	else{
@@ -372,14 +397,17 @@ const  mapStateToProps = state =>{
 
 const mapDispatchToProps = (dispatch, props) =>{
   return {
-	onInsertRoom: (data, status) =>{
-		dispatch(action. acInsertRoomsRequest(data, status))
+	onInsertRoom: (data) =>{
+		dispatch(action. acInsertCustomerRequest(data))
 	},
 	upDateTable : (data) =>{
 		dispatch(action.acUpdateTableRequest(data))
 	},
 	inSertTable : (data) =>{
 		dispatch(action.acInsertTableRequest(data))
+	},
+	updateCustomer : (data)=>{
+		dispatch(action. acUpdateCustomerRequest(data))
 	},
 	OntapRoom : (tap) =>{
 		dispatch(tap)

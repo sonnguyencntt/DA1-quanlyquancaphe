@@ -426,6 +426,107 @@ export const acUpdateTableRequest = (data) =>{
     };
 
 }
+export const acUpdateCustomerRequest = (data) =>{
+
+  
+    var status  = {};
+    return next =>{
+                   
+        //if(statusEvent == true)
+        //{
+            callApi('query/updatedata', 'POST', data).then(res =>{
+               
+              if(typeof res.data.error == "undefined"){
+   
+                status = {
+                   status : 'success',
+                   classcomponent : 'alert alert-success',
+                   text : 'Chỉnh sửa dữ liệu thành công ^-^',
+                   display : 'show-alert'
+               }
+               
+   
+               // next(acInsertRooms(res.data, status))
+               next({type : {
+                    status_event :{
+                   type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
+                   status:status
+               },
+               fetch_customer : {
+                type : 'FETCH_CUSTOMER',
+                data : res.data.data
+            },
+            customer_count : {
+               type : 'FETCH_COUNT_CUSTOMER',
+               count : res.data.count
+            },
+            customer_index : {
+                type : 'FETCH_INDEX_CUSTOMER',
+                index : data.index
+            }, 
+            mroom_ontap : {
+                type : 'MODAL_HEADER_FOR_ONTAP_ROOM',
+                event : 'hide-modal',
+                    }, 
+   
+           }
+           })
+               
+               status = {
+                   status : 'success',
+                   classcomponent : 'alert alert-success',
+                   text : 'Thêm mới dữ liệu thành công ^-^',
+                   display : 'hide-alert'
+               }
+                   
+               setTimeout(function(){
+   
+   
+   
+                   next({type : {status_event :{
+                       type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
+                       status:status
+                   }}})
+   
+               }, 2000);
+              }
+              else
+              {
+                next({type : {status_event :{
+                    type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
+                    status:{
+                        status : 'success',
+                        classcomponent : 'alert alert-danger',
+                        text : 'Đã xảy ra lỗi, vui lòng kiểm tra lại ^-^',
+                        display : 'show-alert'
+                    }
+                }}})
+                setTimeout(function(){
+   
+   
+   
+                    next({type : {status_event :{
+                        type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
+                        status:{
+                            status : 'success',
+                            classcomponent : 'alert alert-success',
+                            text : 'Thêm mới dữ liệu thành công ^-^',
+                            display : 'hide-alert'
+                        }
+                    }}})
+    
+                }, 2000);
+              }
+   
+              
+             
+           }).catch((err) =>{console.log(err)});
+   
+   
+
+    };
+
+}
 export const actUpdateProduct = (product) =>{
     return {
         type : Types.UPDATE_PRODUCT,
@@ -467,6 +568,33 @@ export const acFetchTableRequest = (data) => {
                  },
                  table_index : {
                      type : 'FETCH_INDEX_TABLES',
+                     index : data.index
+                 }
+
+             }})
+          
+        });
+
+    };
+}
+
+export const acFetchCustomerRequest = (data) => {
+   
+    return next =>{
+         callApi('query/selectalldata', 'POST',data ).then(res =>{
+           console.log(res);
+           
+             next({type : {
+                 fetch_customer : {
+                     type : 'FETCH_CUSTOMER',
+                     data : res.data.data
+                 },
+                 customer_count : {
+                    type : 'FETCH_COUNT_CUSTOMER',
+                    count : res.data.count
+                 },
+                 customer_index : {
+                     type : 'FETCH_INDEX_CUSTOMER',
                      index : data.index
                  }
 
@@ -642,19 +770,19 @@ export const acDeleteTableRequest = (data) => {
                    type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
                    status:status
                },
-               fetch_table : {
-                type : 'FETCH_TABLES',
+               fetch_customer : {
+                type : 'FETCH_CUSTOMER',
                 data : res.data.data
             },
-            table_count : {
-               type : 'FETCH_COUNT_TABLES',
+            customer_count : {
+               type : 'FETCH_COUNT_CUSTOMER',
                count : res.data.count
             },
-            table_index : {
-                type : 'FETCH_INDEX_TABLES',
+            customer_index : {
+                type : 'FETCH_INDEX_CUSTOMER',
                 index : data.index
             }, 
-            mtable_ontap : {
+            mroom_ontap : {
                 type : 'MODAL_HEADER_FOR_ONTAP_TABLE',
                 event : 'hide-modal',
                     }, 
@@ -717,3 +845,102 @@ export const acDeleteTableRequest = (data) => {
     };
     
 }
+export const acInsertCustomerRequest = (data, statusEvent) => {
+    console.log(data);
+     var status  = {};
+     return next =>{
+                    
+         //if(statusEvent == true)
+         //{
+             callApi('query/insertdata', 'POST', data).then(res =>{
+               console.log(res);
+               if(typeof res.data.error == "undefined"){
+    
+                 status = {
+                    status : 'success',
+                    classcomponent : 'alert alert-success',
+                    text : 'Thêm mới dữ liệu thành công ^-^',
+                    display : 'show-alert'
+                }
+                
+    
+                next({type : {
+                     status_event :{
+                    type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
+                    status:status
+                },
+                fetch_customer : {
+                 type : 'FETCH_CUSTOMER',
+                 data : res.data.data
+             },
+             customer_count : {
+                type : 'FETCH_COUNT_CUSTOMER',
+                count : res.data.count
+             },
+             customer_index : {
+                 type : 'FETCH_INDEX_CUSTOMER',
+                 index : data.index
+             }, 
+             mroom_ontap : {
+                 type : 'MODAL_HEADER_FOR_ONTAP_ROOM',
+                 event : 'hide-modal',
+                     }, 
+    
+            }
+            })
+                
+                status = {
+                    status : 'success',
+                    classcomponent : 'alert alert-success',
+                    text : 'Thêm mới dữ liệu thành công ^-^',
+                    display : 'hide-alert'
+                }
+                setTimeout(function(){
+    
+    
+    
+                    next({type : {status_event :{
+                        type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
+                        status:status
+                    }}})
+    
+                }, 2000);
+               }
+               else
+               {
+                 next({type : {status_event :{
+                     type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
+                     status:{
+                         status : 'success',
+                         classcomponent : 'alert alert-danger',
+                         text : 'Đã xảy ra lỗi, vui lòng kiểm tra lại ^-^',
+                         display : 'show-alert'
+                     }
+                 }}})
+                 setTimeout(function(){
+    
+    
+    
+                     next({type : {status_event :{
+                         type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
+                         status:{
+                             status : 'success',
+                             classcomponent : 'alert alert-success',
+                             text : 'Thêm mới dữ liệu thành công ^-^',
+                             display : 'hide-alert'
+                         }
+                     }}})
+     
+                 }, 2000);
+               }
+             
+    
+               
+              
+            }).catch((err) =>{console.log(err)});
+       
+    
+ 
+     };
+     
+ }

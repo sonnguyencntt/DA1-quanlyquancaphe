@@ -4,6 +4,8 @@ import status from './status';
 import stttable from './stttable';
 import * as event from './eventtable';
 import navigation from './navigation';
+import navigation_customer from './navigation_customer';
+
 import * as form1 from './formtable';
 import * as form from './form';
 
@@ -13,6 +15,8 @@ import * as formCustomer from './formcustomer';
 import styleEvent from './styleevent'
 import * as tap from './tap'
 import * as table from './table';
+import * as customer from './customer';
+
 import actionPrevent from './actionprevent';
 
 const appReducers = combineReducers({
@@ -20,6 +24,11 @@ const appReducers = combineReducers({
         index : table.index,
         count : table.count,
         data : table.data
+    }),
+    customer : combineReducers({
+        index : customer.index,
+        count : customer.count,
+        data : customer.data
     }),
     stttable,
     event : combineReducers ({
@@ -32,6 +41,7 @@ const appReducers = combineReducers({
         // phone_supplier : event.phone
     }),
     navigation,
+    navigation_customer,
     formtable : combineReducers({
         idtable : form1.idtable,
         name : form1.name,
@@ -88,7 +98,20 @@ const appReducers = combineReducers({
         /////////////////// SEARCH
 
         id_name_search_supplier : form.id_name_search_supplier,
-        debit_search_supplier : form.debit_search_supplier
+        debit_search_supplier : form.debit_search_supplier,
+        id_name_search_customer : form.id_name_search_customer,
+        debit_search_customer : form.debit_search_customer, 
+
+        indexcustomer : form.index_customer,
+        idcustomer : form.idcustomer,
+        birthdaycustomer : form.birthdaycustomer,
+        namecustomer : form.namecustomer,
+        emailcustomer : form.emailcustomer,
+        phonecustomer : form.phonecustomer,
+        addresscustomer : form.addresscustomer,
+        notecustomer : form.notecustomer,
+        debitcustomer : form.debitcustomer,
+        avatarcustomer : form.avatarcustomer,
 
     })
  

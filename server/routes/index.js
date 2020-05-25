@@ -5,6 +5,8 @@ var conn = connectDB.pool;
 var table = require('./board_type/table');
 var room = require('./board_type/room');
 var supplier = require('./board_type/supplier')
+var customer = require('./board_type/customer')
+
 var export_Excel = require('./export_data')
 
 
@@ -24,7 +26,10 @@ switch (req.type) {
             break;
             case 'SUPPLIER':
                 supplier.select_all_data(req,conn,res)
-                break;        
+                break; 
+                case 'CUSTOMER':
+                    customer.select_all_data(req,conn,res)
+                    break;        
     default:
         break;
 }
@@ -43,6 +48,9 @@ router.post('/query/insertdata',(req, res, next)=>{
                 case 'SUPPLIER':
                 supplier.insert(req,conn,res)
                 break;
+                case 'CUSTOMER':
+                    customer.insert(req,conn,res)
+                    break;
         default:
             break;
     }
@@ -61,6 +69,9 @@ router.post('/query/insertdata',(req, res, next)=>{
                     case 'SUPPLIER':
                 supplier.update(req,conn,res)
                 break;
+                case 'CUSTOMER':
+                    customer.update(req,conn,res)
+                    break;
             default:
                 break;
         }
@@ -78,6 +89,9 @@ router.post('/query/insertdata',(req, res, next)=>{
                         case 'SUPPLIER':
                 supplier.delete(req,conn,res)
                 break;
+                case 'CUSTOMER':
+                    customer.delete(req,conn,res)
+                    break;
                 default:
                     break;
             }

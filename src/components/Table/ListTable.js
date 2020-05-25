@@ -31,6 +31,7 @@ onDelete = (data) =>{
   })
 }
     componentWillMount(){
+      
       this.props.fetchAllTables({index : 1,
                                 room: this.props.event.room,
                                 table: this.props.event.table,

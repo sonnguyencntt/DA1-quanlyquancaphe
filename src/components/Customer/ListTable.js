@@ -32,6 +32,7 @@ onDelete = (data) =>{
   })
 }
     componentWillMount(){
+      console.log('da vao willnha')
       this.props.fetchAllTables({index : 1,
                                 id : this.props.form.id_name_search_supplier,
                                 debit : Number(this.props.form.debit_search_supplier),
