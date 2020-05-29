@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './App.css';
+
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 // window.jQuery = window.$ = require('../node_modules/jquery/dist/jquery.min');

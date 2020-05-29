@@ -569,7 +569,8 @@ export const acFetchTableRequest = (data) => {
                  table_index : {
                      type : 'FETCH_INDEX_TABLES',
                      index : data.index
-                 }
+                 },
+                 
 
              }})
           

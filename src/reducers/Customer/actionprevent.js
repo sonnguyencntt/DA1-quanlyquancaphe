@@ -3,7 +3,7 @@ import { table } from './eventtable';
 
 
 
-const actionPrevent = (state = {link : '/table'} , action) =>
+const actionPrevent = (state = {link : '/customer'} , action) =>
 {
   var newstate = {...state}
   return newstate;

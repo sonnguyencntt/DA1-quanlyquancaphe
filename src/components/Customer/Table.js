@@ -94,7 +94,8 @@ class Table extends Component {
 				onchange_debit_search_supplier :{
 					type : Types.CHANGE_DEBIT_SEARCH_SUPPLIER,
 					text : e.target.value
-				}
+				},
+				
 			}}, ()=>{
 				this.props.fetchAllTables({index : 1,
 					id : this.props.form.id_name_search_supplier,

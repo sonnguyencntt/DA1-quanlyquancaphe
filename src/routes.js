@@ -6,6 +6,8 @@ import Product from './pages/Product/Product';
 import Table from './pages/Table/Table';
 import WareHousing from './pages/WareHousing/WareHousing';
 import DashBoard from './pages/DashBoard/DashBoard';
+import Login from './pages/Login/Login';
+
 import { createStore, applyMiddleware} from 'redux';
 import appReducers_DashBoard from './reducers/Dashboard/index';
 import appReducers_Order from './reducers/Order/index';
@@ -37,7 +39,7 @@ function Create_Store(storeName, Component, reducer)
 const routes = [
 
     {
-        path : '/home' ,
+        path : '/' ,
           exact : true,
           
           main : () => {return Create_Store("storeDashBoard" , DashBoard, appReducers_DashBoard, )}
@@ -74,6 +76,11 @@ const routes = [
         path : '/warehousing' ,
         exact : false,
         main : () => <WareHousing/>
+    },
+    {
+        path : '/login' ,
+        exact : false,
+        main : () => <Login/>
     },
 
 ];

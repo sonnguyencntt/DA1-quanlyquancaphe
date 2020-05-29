@@ -1,11 +1,4 @@
 import React, { Component } from 'react';
-// import './../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-// import './../../../node_modules/bootstrap/dist/js/bootstrap.min';
-
-
-
-
-///////
 
 
 
@@ -16,7 +9,6 @@ import React, { Component } from 'react';
 ///////////
 class Header extends Component {
   
-   // console.log(this.props.history.match.params.id);
  
   render() 
   

@@ -3,24 +3,9 @@ import Menu from '../../components/Menu/Menu';
 import Header from '../../components/Menu/Header';
 import Content from '../../components/Customer/Content';
 import {Redirect} from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import CheckAuth from  './../../authentication/checkauth'
 
-import './../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-// import './../../../node_modules/bootstrap/dist/js/bootstrap.min';
-
-// import $ from 'jquery';
-// import './../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-// import './../../../node_modules/bootstrap/dist/js/bootstrap.min';
-
- //for bootstrap.min.js
-//bootstrap-theme file for bootstrap 3 only
-// import './../../../bootstrap/dist/css/bootstrap-theme.min.css';
-// import './../../../bootstrap/dist/css/bootstrap.min.css';
-// import './../../../bootstrap/dist/js/bootstrap.min.js';
-
-
-const history = createBrowserHistory();
-
+import {connect} from 'react-redux';
 
 
 
@@ -28,12 +13,65 @@ class Table extends Component {
   
  
   
+  componentWillMount(){
+    CheckAuth().then((data)=>{
+      if(data == true)
+      {
+        this.props.checkRedirect({type : {
+          redirect : {
+              type : 'CHECK_REDIRECT',
+              data : true,
+                },
+                loading : {
+                  type : 'CHECK_LOADING',
+                  data : true,
+                    }}})
+        // console.log(data);
+        //  this.setState({redirect : true, loading : true});
+        // //this.state.redirect = true;
+
+        return;
+      }
+      else
+      {
+        this.props.checkRedirect({type : {
+          redirect : {
+              type : 'CHECK_REDIRECT',
+              data : false,
+                },
+                loading : {
+                  type : 'CHECK_LOADING',
+                  data : true,
+                    }}})
+
+      this.setState({redirect: false, loading : true})
+      }
+    })
+    // if(CheckAuth())
+    // {
+      
+    //   this.setState({redirect : true});
+    //   return;
+    // }
+    // this.setState({redirect: false})
+  }
  
   render() 
   
   {
-    console.log(this.props);
-    return (
+    console.log(this.props.redirect);
+    if(this.props.redirect.loading == false)
+    {
+     return <div></div>
+    }
+    else
+    {
+      if(this.props.redirect.redirect == false)
+      {
+       return <Redirect to='/login' />
+  
+      }
+     return (
     
 <div>
   
@@ -67,6 +105,25 @@ class Table extends Component {
     );
   }
 }
+}
 
+const  mapStateToProps = state =>{
+  
 
-export default Table;
+  return{
+   redirect : state.redirect,
+   test : state.test
+
+  }
+};
+const mapDispatchToProps = (dispatch, props) =>{
+  return {
+    checkRedirect : (redirect) =>{
+      dispatch(redirect)
+    },
+   
+   
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Table);

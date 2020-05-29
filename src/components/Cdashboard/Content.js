@@ -22,6 +22,9 @@ class Content extends Component {
     
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
  
+ <div class="row">
+	 
+ 
  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 responsive-sidebar">
    
  </div>
@@ -81,6 +84,8 @@ class Content extends Component {
 	</div>
 	
 </div>
+</div>
+
 </div>
 
    

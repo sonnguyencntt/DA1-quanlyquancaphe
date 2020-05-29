@@ -5,9 +5,11 @@ import stttable from './stttable';
 import * as event from './eventtable';
 import navigation from './navigation';
 import navigation_customer from './navigation_customer';
-
+import test from './loading'
 import * as form1 from './formtable';
 import * as form from './form';
+import redirect from '../redirect';
+import loading from '../loading';
 
 //Edit Type
 import * as modal from './modal'
@@ -113,7 +115,12 @@ const appReducers = combineReducers({
         debitcustomer : form.debitcustomer,
         avatarcustomer : form.avatarcustomer,
 
-    })
+    }),
+    redirect : combineReducers({
+        redirect,
+        loading,
+    }),
+    test
  
 });
 

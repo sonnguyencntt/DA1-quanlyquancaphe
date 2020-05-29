@@ -71,7 +71,8 @@ class Table extends Component {
 				onchange_id_name_search_customer :{
 					type :Types.CHANGE_ID_NAME_SEARCH_CUSTOMER,
 					text : e.target.value
-				}
+				},
+				
 			}}, ()=>{
 				this.props.fetchAllTables({index : 1,
 					id : this.props.form.id_name_search_customer,

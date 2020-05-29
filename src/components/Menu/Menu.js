@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Route, Link} from 'react-router-dom';
-// import './../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-// import './../../../node_modules/bootstrap/dist/js/bootstrap.min';
+ import './../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {connect} from 'react-redux';
 
 
@@ -11,7 +10,7 @@ class Menu extends Component {
   menu = [
     {
       name : 'Tổng quan',
-      to : '/home',
+      to : '/',
       icon : 'fa fa-eye',
 
       exact : true,
@@ -57,7 +56,9 @@ class Menu extends Component {
         icon : 'fa fa-truck',
       
         exact : false
-      }
+      },
+    
+     
   ];
   shouldComponentUpdate(nextProps, nextState)
   {
