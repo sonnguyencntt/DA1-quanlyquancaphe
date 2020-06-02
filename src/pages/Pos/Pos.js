@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './../../components/Pos/Header';
 import Tabs from '../../components/Pos/Tabs';
+import {connect} from 'react-redux';
 
 
 
@@ -141,5 +142,12 @@ class Pos extends Component {
   }
 }
 
-
-export default Pos;
+const  mapStateToProps = state =>{
+  
+	console.log(state);
+	  return{
+	  table:state
+	
+	  }
+	};
+export default connect(mapStateToProps,null)(Pos);

@@ -75,7 +75,7 @@ if(number > 0)
        if(i==this.props.table.index){
 
        result[i] = <Li index = {i}
-       id = {this.state.active}
+       id = {this.state.customer.active}
        />
       
       }
@@ -120,8 +120,8 @@ if(number > 0)
 
 const  mapStateToProps = state =>{
   return{
-    table : state.table,
-    event : state.event
+    table : state.customer.table,
+    event : state.customer.event
 
   
   }

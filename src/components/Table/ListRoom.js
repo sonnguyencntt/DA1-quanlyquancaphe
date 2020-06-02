@@ -14,7 +14,6 @@ class ListRoom extends Component {
   
   shouldComponentUpdate(nextProps, nextState)
 	{
-    console.log(JSON.stringify(nextProps.rooms));
    if(JSON.stringify(nextProps.rooms) == JSON.stringify(this.props.rooms))
 		{
       return false;
@@ -171,7 +170,7 @@ class ListRoom extends Component {
 const  mapStateToProps = state =>{
 
   return{
-    rooms: state.rooms
+    rooms: state.table.rooms
   }
 }
 

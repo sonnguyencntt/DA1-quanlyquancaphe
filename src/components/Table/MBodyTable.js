@@ -113,8 +113,8 @@ this.props.onInsertTable(data)
 const  mapStateToProps = state =>{
   
 	return{
-      form : state.formtable,
-      event : state.event
+      form : state.table.formtable,
+      event : state.table.event
 	}
   }
 const mapDispatchToProps = (dispatch, props) =>{

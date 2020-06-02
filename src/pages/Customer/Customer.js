@@ -28,7 +28,7 @@ class Table extends Component {
                     }}})
         // console.log(data);
         //  this.setState({redirect : true, loading : true});
-        // //this.state.redirect = true;
+        // //this.state.customer.redirect = true;
 
         return;
       }
@@ -111,8 +111,8 @@ const  mapStateToProps = state =>{
   
 
   return{
-   redirect : state.redirect,
-   test : state.test
+   redirect : state.customer.redirect,
+   test : state.customer.test
 
   }
 };

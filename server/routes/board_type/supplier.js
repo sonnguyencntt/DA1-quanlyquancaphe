@@ -2,9 +2,7 @@ const Pagination = require('../pagination')
 const Query = require('../query');
 
 function module_query(data, sql_query, pool, res ){
-    //console.log(data);
     var sql_select = "SELECT * FROM suppliers WHERE Namesupplier LIKE '%" + data.id + "%' and Debit >= "+data.debit+"";
-    console.log(sql_select);
     var sql_count = "SELECT COUNT(*) as count FROM suppliers WHERE Namesupplier LIKE '%" + data.id + "%' and Debit >= "+data.debit+"";
     
     const pagi = Pagination.pagination(data.index);
@@ -13,9 +11,7 @@ function module_query(data, sql_query, pool, res ){
 }
 
 module.exports.insert = function(data, pool, res){
-    //console.log(data);
     var sql_insert ="INSERT INTO suppliers (Idsupplier, Namesupplier, Email,Phone,Address, Note, Debit, Avatar) VALUES ('"+ data.idsupplier + "','"+ data.namesupplier + "','" + data.emailsupplier+ "','"+ data.phonesupplier + "','"+ data.addresssupplier + "','"+ data.notesupplier + "','"+ data.debitsupplier + "','"+data.avatarsupplier+"')";// Thực hiện câu truy vấn và show dữ liệu
-   console.log(sql_insert);
     module_query(data,sql_insert, pool, res);
 }
 
@@ -28,7 +24,6 @@ module.exports.select_all_data = function(data, pool, res){
 module.exports.update = function(data, pool, res){
     
     var sql_update ="UPDATE suppliers SET Idsupplier = '" + data.idsupplier + "' , Namesupplier  = '" + data.namesupplier + "' , Email =  '" + data.emailsupplier + "', Phone =  '" + data.phonesupplier + "', Address =  '" + data.addresssupplier + "', Note =  '" + data.notesupplier + "', Debit =  '" + data.debitsupplier + "', Avatar =  '"+data.avatarsupplier+"' WHERE id =" + data.indexsupplier +" ";
-    console.log(sql_update)
     module_query(data,sql_update, pool, res);
 }
 

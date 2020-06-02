@@ -22,31 +22,49 @@ class DashBoard extends Component {
     };
   }
 
-  
-  componentWillMount(){
+  static getDerivedStateFromProps(props, state) {
     CheckAuth().then((data)=>{
       if(data == true)
       {
-        console.log(data);
-         this.setState({redirect : true, loading : true});
+       console.log('getdriver')
+        
         //this.state.redirect = true;
-        return;
+        return null
       }
       else
       {
        // this.state.redirect = false;
-
-      this.setState({redirect: false, loading : true})
-      }
-    })
-    // if(CheckAuth())
-    // {
+        return null;
       
-    //   this.setState({redirect : true});
-    //   return;
-    // }
-    // this.setState({redirect: false})
+      }
+    })  
   }
+  // componentWillMount(){
+  //   console.log('will mount')
+
+  //   CheckAuth().then((data)=>{
+  //     if(data == true)
+  //     {
+  //       console.log(data);
+  //        this.setState({redirect : true, loading : true});
+  //       //this.state.redirect = true;
+  //       return;
+  //     }
+  //     else
+  //     {
+  //      // this.state.redirect = false;
+
+  //     this.setState({redirect: false, loading : true})
+  //     }
+  //   })
+  //   // if(CheckAuth())
+  //   // {
+      
+  //   //   this.setState({redirect : true});
+  //   //   return;
+  //   // }
+  //   // this.setState({redirect: false})
+  // }
    // console.log(this.props.history.match.params.id);
  
   render() 

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 
 import './../../login.css';
-import styles from './../../login.css';
 import callApi from './../../ultis/apiCaller';
 
 import { Redirect } from "react-router-dom";
 
-import Alert from './../../components/Table/Alert'
+import {connect} from 'react-redux';
 
 
 
@@ -18,7 +17,6 @@ class Login extends Component {
         super(props);
       
         this.state = {
-          redirect : false,
           userName : '',
           passWord : '',
           alert : {
@@ -30,21 +28,34 @@ class Login extends Component {
         };
       }
     
-
-
- submit = () =>{
+   
+componentWillMount()
+{
+    this.props.redirect_func({
+        type : {
+            redirect : {
+              type : 'REDIRECT_PAGES',
+              data : 'not_verfication'
+            }
+          }
+       })
+}
+ submit = (callback) =>{
      const data = {username : this.state.userName,
                     password : this.state.passWord}
     callApi('checkpass', 'POST', data).then(res =>{
         console.log(res);
+       
         if(typeof res.data.token != 'undefined')
         {
             document.cookie = res.data.token
-            this.setState({redirect:true})
+            callback(true)
+            
         }
         else
         {
-            this.setState({redirect:false})
+            callback(false)
+
             var alert = {...this.state.alert};
             alert.display = '';
             this.setState({alert:alert})
@@ -62,10 +73,16 @@ class Login extends Component {
      });
  }
   render() 
- 
   {
-    if (this.state.redirect) {
-        return <Redirect to='/' />
+    console.log('login')
+
+    if (this.props.redirect == true) {
+       
+        return <Redirect to={{
+            pathname: '/table',
+            
+        }}
+/>
       }
     return (
 
@@ -106,7 +123,17 @@ class Login extends Component {
                     </svg>
                     <input type="password" name = 'passWord' onChange = {(e)=>{this.onchange(e)}} class="login__input pass" placeholder="Password" value = {this.state.passWord}/>
                 </div>
-                <button onClick = {()=>{this.submit()}} class="login__submit">Sign in</button>
+                <button onClick = {()=>{this.submit((data)=>{
+                    this.props.redirect_func({
+                        type :{
+                            redirect : {
+                                type : 'REDIRECT_PAGES',
+                                data : data
+
+                            }
+                        }
+                    })
+                })}} class="login__submit">Sign in</button>
                 <p class="login__signup">Don't have an account? &nbsp;<a>Sign up</a></p>
             </div>
         </div>
@@ -117,4 +144,24 @@ class Login extends Component {
 }
 
 
-export default Login;
+const  mapStateToProps = state =>{
+  
+    console.log(state);
+      return{
+       redirect : state.table.redirect
+    
+      }
+    };
+    
+    
+    const mapDispatchToProps = (dispatch, props) =>{
+      return {
+        redirect_func : (tap) =>{
+          dispatch(tap)
+        },
+        
+      }
+    }
+    
+    
+    export default connect(mapStateToProps,mapDispatchToProps)(Login);

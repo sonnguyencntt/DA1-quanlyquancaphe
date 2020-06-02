@@ -120,8 +120,8 @@ if(number > 0)
 
 const  mapStateToProps = state =>{
   return{
-    table : state.table,
-    event : state.event
+    table : state.table.table,
+    event : state.table.event
 
   
   }

@@ -1,4 +1,5 @@
 import React  from 'react';
+
 import Customer from './pages/Customer/Customer';
 import Order from './pages/Order/Order';
 import Pos from './pages/Pos/Pos';
@@ -11,8 +12,7 @@ import Login from './pages/Login/Login';
 import { createStore, applyMiddleware} from 'redux';
 import appReducers_DashBoard from './reducers/Dashboard/index';
 import appReducers_Order from './reducers/Order/index';
-import appReducers_Table from './reducers/Table/index';
-import appReducers_Customer from './reducers/Customer/index';
+
 
 
 
@@ -49,7 +49,7 @@ const routes = [
    {
     path : '/customer' ,
     exact : false,
-    main : () => {return Create_Store("storeCustomer" , Customer, appReducers_Customer)}
+    main : () => <Customer/>
 },
     {
         path : '/order' ,
@@ -70,7 +70,7 @@ const routes = [
     {
         path : '/table' ,
         exact : false,
-        main : () => {return Create_Store("storeTable" , Table, appReducers_Table)}
+        main : () => <Table/>
     },
     {
         path : '/warehousing' ,

@@ -35,6 +35,10 @@ class SelectRoom extends Component {
         )
       })
     }
+    else
+    {
+      return <div></div>
+    }
     return result;
   }
   render() 
@@ -60,8 +64,8 @@ console.log('select_room')
 const  mapStateToProps = state =>{
 console.log(state);
   return{
-    table : state.rooms,
-    form : state.formtable
+    table : state.table.rooms,
+    form : state.table.formtable
   }
 };
 

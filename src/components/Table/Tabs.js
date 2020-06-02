@@ -123,7 +123,7 @@ console.log('tab');
 const  mapStateToProps = state =>{
 
   return{
-  ontap : state.onTap
+  ontap : state.table.onTap
   }
 }
 

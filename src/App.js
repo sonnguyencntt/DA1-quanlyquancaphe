@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import Menu from './components/Menu/Menu';
 import routes from './routes'
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+import { Router, Route, Link, Switch } from 'react-router-dom';
 import history from './history';
-
 
 class App extends Component {
   showContentMenus = (routes) => {

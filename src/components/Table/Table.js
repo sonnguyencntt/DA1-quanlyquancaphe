@@ -189,10 +189,10 @@ class Table extends Component {
 const  mapStateToProps = state =>{
   
 	return{
-	  event : state.event,
-	  room : state.rooms,
+	  event : state.table.event,
+	  room : state.table.rooms,
 	  
-	  status : state.stttable
+	  status : state.table.stttable
 
 	}
   }

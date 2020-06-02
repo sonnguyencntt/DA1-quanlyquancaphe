@@ -5,6 +5,7 @@ import Content from '../../components/Table/Content';
 import {Redirect} from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import CheckAuth from  './../../authentication/checkauth'
+import {connect} from 'react-redux';
 
 
 // import $ from 'jquery';
@@ -18,62 +19,59 @@ import CheckAuth from  './../../authentication/checkauth'
 // import './../../../bootstrap/dist/js/bootstrap.min.js';
 
 
-const history = createBrowserHistory();
 
 
 
 
 class Table extends Component {
-  constructor(props) {
-    super(props);
   
-    this.state = {
-      redirect : true,
-      loading : false,
-      
-    };
-  }
-  componentWillMount(){
-    CheckAuth().then((data)=>{
-      if(data == true)
-      {
-        console.log(data);
-         this.setState({redirect : true, loading : true});
-        //this.state.redirect = true;
-        return;
-      }
-      else
-      {
-       // this.state.redirect = false;
-
-      this.setState({redirect: false, loading : true})
+  redirect_func = (data) =>{
+    this.props.redirect_page({
+      type : {
+        redirect : {
+          type : 'REDIRECT_PAGES',
+          data : data
+        }
       }
     })
-    // if(CheckAuth())
-    // {
-      
-    //   this.setState({redirect : true});
-    //   return;
-    // }
-    // this.setState({redirect: false})
+  }
+
+  componentWillMount(){
+    if(this.props.redirect =='not_verfication' )
+    {
+     
+      CheckAuth().then((data)=>{
+        if(data == false)
+        {
+          return;
+        }
+        this.redirect_func(data);
+      })
+    }
+
+   
+   
   }
  
   
  
   render() 
-  
   {
-    if(this.state.loading == false)
+    console.log(this.props.redirect)
+
+   if(this.props.redirect == 'not_verfication')
    {
-    return <div></div>
+     return <div></div>
    }
-   else
-   {
-     if(this.state.redirect == false)
-     {
-      return <Redirect to='/login' />
- 
-     }
+  if(this.props.redirect == false)
+  {
+    return <Redirect to={{
+      pathname: '/login',
+      
+  }}
+/>
+  }
+    
     return (
     
 <div>
@@ -107,8 +105,25 @@ class Table extends Component {
    
     );
   }
-  }
+  
 }
+const  mapStateToProps = state =>{
+  
+  console.log(state);
+    return{
+     redirect : state.table.redirect
+  
+    }
+  };
+  
+  
+  const mapDispatchToProps = (dispatch, props) =>{
+    return {
+      redirect_page : (tap) =>{
+        dispatch(tap)
+      },
+      
+    }
+  }
 
-
-export default Table;
+    export default connect(mapStateToProps,mapDispatchToProps)(Table);

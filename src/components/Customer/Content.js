@@ -385,13 +385,13 @@ exportExcel = () =>{
 const  mapStateToProps = state =>{
   console.log(state);
     return{
-	  modal: state.showModal,
-	  eventUpIn : state.eventUpdate_Insert,
-	  //form : state.formroom,
-	  form : state.form_onChange,
-	  formtable : state.formtable,
-	  event : state.event,
-	  ontap : state.onTap
+	  modal: state.customer.showModal,
+	  eventUpIn : state.customer.eventUpdate_Insert,
+	  //form : state.customer.formroom,
+	  form : state.customer.form_onChange,
+	  formtable : state.customer.formtable,
+	  event : state.customer.event,
+	  ontap : state.customer.onTap
     }
   }
 

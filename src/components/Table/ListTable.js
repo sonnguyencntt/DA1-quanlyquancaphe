@@ -193,10 +193,10 @@ if(table.IdTable == data)
 
 const  mapStateToProps = state =>{
   
-
+console.log(state);
   return{
-   table : state.table,
-   event : state.event
+   table : state.table.table,
+   event : state.table.event
 
   }
 };

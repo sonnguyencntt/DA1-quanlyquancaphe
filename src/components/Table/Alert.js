@@ -49,7 +49,7 @@ class Alert extends Component {
 }
 const  mapStateToProps = state =>{
   return{
-   status : state.status
+   status : state.table.status
   }
 }
 

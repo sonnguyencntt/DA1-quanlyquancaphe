@@ -76,7 +76,7 @@ class Modalbody extends Component {
 const  mapStateToProps = state =>{
   
     return{
-      form : state.formroom
+      form : state.table.formroom
     }
   }
   const mapDispatchToProps = (dispatch, props) =>{

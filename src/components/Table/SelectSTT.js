@@ -51,7 +51,7 @@ class SelectSTT extends Component {
 const  mapStateToProps = state =>{
 
   return{
-    status : state.stttable
+    status : state.table.stttable
   }
 };
 

@@ -131,7 +131,7 @@ const  mapStateToProps = state =>{
 
   
 	return{
-	 search : state.formroom
+	 search : state.table.formroom
 	}
   };
 const mapDispatchToProps = (dispatch, props) =>{

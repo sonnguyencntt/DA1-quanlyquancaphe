@@ -229,13 +229,13 @@ onchange_index_customer :{
 
 
 const  mapStateToProps = state =>{
-  console.log(state.table);
+  console.log(state.customer.table);
 
   return{
-   table : state.table,
-   customer : state.customer,
-   event : state.event,
-  form : state.form_onChange
+   table : state.customer.table,
+   customer : state.customer.customer,
+   event : state.customer.event,
+  form : state.customer.form_onChange
   }
 };
 

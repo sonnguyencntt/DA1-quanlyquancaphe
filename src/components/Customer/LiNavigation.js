@@ -61,9 +61,9 @@ if(callback)
 }
 const  mapStateToProps = state =>{
   return{
-   status : state.status,
-   event : state.event,
-   table : state.table,
+   status : state.customer.status,
+   event : state.customer.event,
+   table : state.customer.table,
 
   }
 }

@@ -60,8 +60,8 @@ console.log('select_room')
 const  mapStateToProps = state =>{
 console.log(state);
   return{
-    table : state.rooms,
-    form : state.formtable
+    table : state.customer.rooms,
+    form : state.customer.formtable
   }
 };
 

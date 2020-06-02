@@ -228,12 +228,12 @@ onchange_index_supplier :{
 
 
 const  mapStateToProps = state =>{
-  console.log(state.table);
+  console.log(state.customer.table);
 
   return{
-   table : state.table,
-   event : state.event,
-  form : state.form_onChange
+   table : state.customer.table,
+   event : state.customer.event,
+  form : state.customer.form_onChange
   }
 };
 

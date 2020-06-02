@@ -1,9 +1,16 @@
 import * as Types from './../constants/ActionType';
-import callApi from './../ultis/apiCaller';
+import callApi,  * as middleware from './../ultis/apiCaller';
+middleware.middleWare_resPonse();
+
 export const acFetchRoomsRequest = (data) => {
+   
      return (next, getstate, extra) =>{
 
          callApi('query/selectalldata', 'POST', data).then(res =>{
+            if(res == false)
+            {
+                return;
+            }
            console.log(res);
            next({type : {
                fetch_room :{
@@ -24,6 +31,10 @@ export const acInsertRoomsRequest = (data, statusEvent) => {
         if(statusEvent == true)
         {
             callApi('query/insertdata', 'POST', data).then(res =>{
+                if(res == false)
+                {
+                    return;
+                }
               if(typeof res.data.error == 'undefined' ){
    
                 status = {
@@ -104,6 +115,10 @@ export const acInsertRoomsRequest = (data, statusEvent) => {
         else{
 
             callApi('query/updatedata', 'POST', data).then(res =>{
+                if(res == false)
+                {
+                    return;
+                }
 
                 if(typeof res.data.error == "undefined"){
    
@@ -204,7 +219,10 @@ export const acDeleteRoomsRequest = (id) => {
     return next =>{
        
          callApi('query/deletedata', 'POST', id).then(res =>{
-
+            if(res == false)
+            {
+                return;
+            }
             
              if(typeof res.data.error == "undefined"){
                  if(res.data.data == "ERR-14-06-1999")
@@ -334,7 +352,10 @@ export const acUpdateTableRequest = (data) =>{
         //if(statusEvent == true)
         //{
             callApi('query/updatedata', 'POST', data).then(res =>{
-               
+                if(res == false)
+             {
+                 return;
+             }
               if(typeof res.data.error == "undefined"){
    
                 status = {
@@ -435,7 +456,10 @@ export const acUpdateCustomerRequest = (data) =>{
         //if(statusEvent == true)
         //{
             callApi('query/updatedata', 'POST', data).then(res =>{
-               
+                if(res == false)
+             {
+                 return;
+             }
               if(typeof res.data.error == "undefined"){
    
                 status = {
@@ -538,6 +562,10 @@ export const acSearchRoomsRequest = (name) =>{
     return next =>{
        
         callApi('query/searchdata', 'POST', name).then(res =>{
+            if(res == false)
+            {
+                return;
+            }
           console.log(res);
             next({type : {
                 fetch_room :{
@@ -555,7 +583,11 @@ export const acFetchTableRequest = (data) => {
    
     return next =>{
          callApi('query/selectalldata', 'POST',data ).then(res =>{
-           console.log(res);
+             if(res == false)
+             {
+                 return;
+             }
+             console.log('da vao select table')
            
              next({type : {
                  fetch_table : {
@@ -583,6 +615,10 @@ export const acFetchCustomerRequest = (data) => {
    
     return next =>{
          callApi('query/selectalldata', 'POST',data ).then(res =>{
+            if(res == false)
+            {
+                return;
+            }
            console.log(res);
            
              next({type : {
@@ -623,6 +659,10 @@ export const acFetchsttTableRequest = () => {
     return next =>{
        
          callApi('getstt', 'get',null ).then(res =>{
+            if(res == false)
+            {
+                return;
+            }
            
            next(acFetchsttTable(res.data));
           
@@ -640,6 +680,10 @@ export const acFetchsttTable = (status) =>{
 export const acSearchTablesRequest = (data, index) => {
     return (next, getstate, extra) =>{
         callApi('query/searchdata', 'post', data).then(res =>{
+            if(res == false)
+            {
+                return;
+            }
           
           
           next(acFetchTable(res.data, index,''));
@@ -657,6 +701,10 @@ export const acInsertTableRequest = (data, statusEvent) => {
         //if(statusEvent == true)
         //{
             callApi('query/insertdata', 'POST', data).then(res =>{
+                if(res == false)
+                {
+                    return;
+                }
               console.log(res);
               if(typeof res.data.error == "undefined"){
    
@@ -756,6 +804,10 @@ export const acDeleteTableRequest = (data) => {
                    
        
             callApi('query/deletedata', 'POST', data).then(res =>{
+                if(res == false)
+                {
+                    return;
+                }
               if(typeof res.data.error == "undefined"){
    
                 status = {
@@ -771,6 +823,10 @@ export const acDeleteTableRequest = (data) => {
                    type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
                    status:status
                },
+               fetch_table : {
+                type : 'FETCH_TABLES',
+                data : res.data.data
+            },
                fetch_customer : {
                 type : 'FETCH_CUSTOMER',
                 data : res.data.data
@@ -854,6 +910,10 @@ export const acInsertCustomerRequest = (data, statusEvent) => {
          //if(statusEvent == true)
          //{
              callApi('query/insertdata', 'POST', data).then(res =>{
+                if(res == false)
+                {
+                    return;
+                }
                console.log(res);
                if(typeof res.data.error == "undefined"){
     
