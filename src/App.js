@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Menu from './components/Menu/Menu';
 import routes from './routes'
-import { Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route,Switch } from 'react-router-dom';
 import history from './history';
 
 class App extends Component {

@@ -73,7 +73,7 @@ if(number > 0)
        if(i==this.props.customer.index){
 
        result[i] = <Li index = {i}
-       id = {this.state.customer.active}
+       id = {this.state.active}
        />
       
       }

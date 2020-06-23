@@ -11,8 +11,9 @@ class Header extends Component {
   
  
   render() 
-  
   {
+	console.log('header')
+
     return (
      
        

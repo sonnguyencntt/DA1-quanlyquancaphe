@@ -60,14 +60,14 @@ class Menu extends Component {
     
      
   ];
-  shouldComponentUpdate(nextProps, nextState)
-  {
-    if(nextProps.preventDefault.link==this.props.preventDefault.link)
-    {
-      return false
-    }
-    return true;
-  }
+  // shouldComponentUpdate(nextProps, nextState)
+  // {
+  //   if(nextProps.preventDefault.link==this.props.preventDefault.link)
+  //   {
+  //     return false
+  //   }
+  //   return true;
+  // }
   
    MenuLink = (label, to, activeOnlyWhenExact, index, icon, prevent)=>{
     return (
@@ -85,7 +85,7 @@ class Menu extends Component {
               
             <Link 
             class = {active} 
-            onClick = {(e)=>{this.checkPrevent(e,this.props.preventDefault,to)}}
+            //onClick = {(e)=>{this.checkPrevent(e,this.props.preventDefault,to)}}
             to = {to}
             ><i class= {icon} ></i>
             <span>&emsp; </span>
@@ -98,15 +98,15 @@ class Menu extends Component {
      
     )
   }
-  checkPrevent = (e,prevent,to) =>{
-    if(prevent.link == to)
-    {
-      e.preventDefault();
-    }
-    else{
-      return;
-    }
-  }
+  // checkPrevent = (e,prevent,to) =>{
+  //   if(prevent.link == to)
+  //   {
+  //     e.preventDefault();
+  //   }
+  //   else{
+  //     return;
+  //   }
+  // }
   showMenus = (menu) =>
   {
       var result = null;

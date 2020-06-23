@@ -111,7 +111,7 @@ const  mapStateToProps = state =>{
   
   console.log(state);
     return{
-     redirect : state.table.redirect
+     redirect : state.redirect
   
     }
   };

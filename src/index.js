@@ -14,7 +14,7 @@ import appReducers from './reducers/App/index';
 // window.jQuery = window.$ = require('../node_modules/jquery/dist/jquery.min');
 // require('../node_modules/bootstrap/dist/js/bootstrap.min');
 // import '../node_modules/jquery/dist/jquery.min';
-// import '../node_modules/bootstrap/dist/js/bootstrap.min';
+//import '../node_modules/bootstrap/dist/js/bootstrap.min';
 
 // import './App.css';
 // window.jQuery = window.$ =  require('jquery/dist/jquery.min');

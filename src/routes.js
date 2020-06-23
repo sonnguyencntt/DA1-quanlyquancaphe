@@ -42,8 +42,8 @@ const routes = [
         path : '/' ,
           exact : true,
           
-          main : () => {return Create_Store("storeDashBoard" , DashBoard, appReducers_DashBoard, )}
-       },
+          main : () => <DashBoard/>
+           },
   
   
    {
@@ -55,7 +55,7 @@ const routes = [
         path : '/order' ,
         exact : false,
         icon : 'glyphicon glyphicon-home',
-        main : () => {return Create_Store("storeOrder" , Order, appReducers_Order)}
+        main : () => <Order/>
     } ,
     {
         path : '/pos' ,

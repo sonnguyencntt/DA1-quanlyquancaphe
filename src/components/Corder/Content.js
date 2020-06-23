@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import Emty from './../Customer/Emty';
+import * as action from '../../actions/index';
 
+import {connect} from 'react-redux';
 
 import axios from 'axios';
+import Order from '../../pages/Order/Order';
 
 
 
@@ -13,11 +17,206 @@ class Content extends Component {
 	constructor(props) {
 		super(props);
 		// Don't call this.setState() here!
-		this.state = { file: '' };
+		this.state = { file: '' ,
+						position_body : 'hide-modal',
+					ListtoShow : []};
 		
 	  }
  
- 
+
+componentWillMount()
+{
+	this.props.fetchAllOrder()
+}
+
+show_bodyTable = (datas)=>{
+	console.log(datas);
+	var result = null;
+	if(datas.length > 0)
+	{
+		console.log('okie')
+		return result = datas.map((data,index) =>
+		{
+	
+		
+		return (
+			<tr>
+			<td>{data.idmenu}</td>
+		 <td>{data.namemenu}</td>
+		 <td>{data.quantity}</td>
+		 <td>{data.unit}</td>
+		 <td>{data.menu_price}</td>
+			<td>{data.billdetail_price}</td>
+	 </tr>	
+		)
+		})
+	}
+	else
+	{
+		return (
+			<Emty/>
+		  )
+	}
+	
+}
+
+
+showList = (id)=>{
+	
+	if(this.state.ListtoShow.length == 0)
+	{
+		var newlistArr = [...this.state.ListtoShow];
+		var newlistArr_ = newlistArr.push(id)
+		this.setState({ListtoShow : newlistArr});
+		return
+	}
+	for(var i = 0; i<this.state.ListtoShow.length ; i++)
+	{
+
+		if(this.state.ListtoShow[i] == id)
+		{
+			var newlistArr = [...this.state.ListtoShow];
+			var newlistArr_ = newlistArr.splice(i, 1);
+			this.setState({ListtoShow : newlistArr});
+			return;
+		}
+		if(i == this.state.ListtoShow.length -1)
+		{
+		var newlistArr = [...this.state.ListtoShow];
+		var newlistArr_ = newlistArr.push(id)
+		this.setState({ListtoShow : newlistArr});
+		return;
+		}
+	}
+}
+	  showData = (datas) =>
+	  {
+	  var result = null;
+	  var position  = '';
+	  
+
+	
+	  if(datas.length > 0)
+	  {
+		console.log('0')
+		return result = datas.map((data,index) =>
+		{
+			if(this.state.ListtoShow.includes(data.IdBill))
+			{
+				position = 'hide-modal'
+			}
+			position = '';
+		var data_parseJson = JSON.parse(data.menu_detail);
+		console.log(data_parseJson);
+		  var statusName = (data.idStatus == 1) ? 'Đang sử dụng'  : 'Trống';
+		  var statusClass = (data.idStatus == 1) ? 'success' : 'default';
+	   return (
+   
+		<React.Fragment>
+
+		<tr class="not-detail">
+			<td >
+				<button onClick={()=>{
+					this.showList(data.IdBill);
+				}} style={{backgroundColor: "white"}}><i class="fa fa-plus-circle text-success" aria-hidden="true"></i></button>
+			</td>
+	   <td>{data.IdBill}</td>
+			<td>{data.create_at}</td>
+			<td>{data.Totalprice}</td>
+			<td>{data.Note}</td>
+			<td>Đã hoàn thành</td>
+		</tr>
+		<tr >
+			<td colspan="8" className = {position}>
+				<ul >
+					  <li class="nav-item">
+						<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Thông tin chi tiết</a>
+				  </li>
+				</ul>
+				<div >
+				  <div>
+					  <div class="row">
+						<div class="col-md-4">
+							<div class="row form-group">
+								<label class="col-md-4">
+									Mã hóa đơn
+								</label>
+								<div class="col-md-8">
+									<strong>{data.IdBill}</strong>
+								</div>
+							</div>
+							<div class="row form-group">
+								<label class="col-md-4">
+									Phòng/Bàn
+								</label>
+								<div class="col-md-8">
+									<strong>{data.TableName}</strong>
+								</div>
+							</div>
+							<div class="row form-group">
+								<label class="col-md-4">
+									Thời gian
+								</label>
+								<div class="col-md-8">
+									<input type="text" name="" disabled="disabled" value={data.create_at} class="form-control" />
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="row form-group">
+								<label class="col-md-4">
+									Nhân Viên
+								</label>
+								<div class="col-md-8">
+	   <strong>{data.name}</strong>
+								</div>
+							</div>
+							<div class="row form-group">
+								<label class="col-md-4">
+									Khách hàng
+								</label>
+								<div class="col-md-8">
+	   <strong>{data.CustomerName}</strong>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<textarea rows="4" class="form-control" value = {data.Note} disabled></textarea>
+						</div>
+					</div>
+					  <table class="table table-striped table-bordered">
+						<thead class="table-success">
+							<tr>
+							  <th>Mã Sản phẩm</th>
+							  <th>Tên sản phẩm</th>
+							  <th>Số lượng</th>
+							  <th>ĐVT</th>
+							  <th>Gía bán</th>
+							  <th>Thành tiền</th>
+							</tr>
+						</thead>
+						<tbody>
+								{this.show_bodyTable(data_parseJson)}
+						
+						</tbody>
+					</table>
+				</div>
+				</div>
+			   </td>
+		</tr>
+		</React.Fragment>
+		
+		 );
+		})
+	  }
+	  else
+	  {
+		return (
+		  <Emty/>
+		)
+	  }
+	 return result
+	  };
   render() 
   
   {
@@ -60,81 +259,24 @@ class Content extends Component {
 	
 </div>
 <div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-table">
+	<div class="col-md-12">
+		<table class="table table-bordered" id="table-child-event">
+            <thead class="table-primary">
+                <tr>
+                	<th></th>
+                  	<th>Mã Hóa Đơn</th>
+					<th>Thời gian</th>
+                  	<th>Tổng tiền</th>
+                  	<th>Ghi chú</th>
+                  	<th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+			{this.showData(this.props.data)}
 	
-	<div class="panel panel-primary set-border">
-		  <div class="panel-heading set_typecolor">
-				<h3 class="panel-title">Thông Tin</h3>
-		  </div>
-		  <div class="panel-body">
-				
-				<div class="table-responsive">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				
-		  </div>
+            </tbody>
+        </table>
 	</div>
-	<input type="file" class='form-control' onChange = {(e)=>{
-		this.setState({file :e.target.files[0] })
-	}}/>
-	
-	<button type="button" class="btn btn-default" onClick = {
-		({da = this.state.file})=>{
-			console.log(this.state.file);
-			const read = new FormData() 
-			read.append('file', this.state.file, this.state.file);
-
-			// var reader= new FileReader();
-			// reader.readAsText(this.state.file);
-			// reader.onload = function(e) {
-			
-			
-			// var result=reader;
-			console.log(read);
-			axios({
-				url: 'upload', //your url
-				method: 'POST',
-				 
-				data : {data : read}// important
-			  }).then((response) => {
-				
-			  });
-			//document.getElementById("DisplayText").innerText=reader.result; /*<p id="DisplayText>*/
-			//}
-			
-			
-				
-			
-		}
-	}>SUBMIT</button>
-	
-	</div>
-	
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		
-		<ul class="pagination pagination-lg float-pagination">
-			<li><a href="#">&laquo;</a></li>
-			<li><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li><a href="#">&raquo;</a></li>
-		</ul>
-		
-	</div>
-	
 </div>
 	
 </div>
@@ -144,6 +286,20 @@ class Content extends Component {
     );
   }
 }
-
-
-export default Content;
+const mapDispatchToProps = (dispatch, props) =>{
+	return {
+	  
+	  fetchAllOrder : (data) =>{
+		dispatch(action.acFetchOrderRequest(data));
+	   
+	  },
+	 
+	}
+  }
+const  mapStateToProps = state =>{
+  console.log(state)
+	return{
+	 data : state.order.data
+	}
+  };
+  export default connect(mapStateToProps,mapDispatchToProps)(Content);

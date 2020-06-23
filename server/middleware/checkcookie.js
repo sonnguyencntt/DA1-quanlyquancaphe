@@ -12,7 +12,7 @@ module.exports =
             var decoded = jwt.verify(accsessToken, 'shhhhh', (err, decode)=>{
                 if(err)
                 {
-
+                  console.log(err)
                   //res.status(403).render();
                    res.send({token : false})
                     return;
@@ -21,11 +21,13 @@ module.exports =
                     //+ token da het hen
                     
                 }
+                console.log('success')
                 req.decodeToken = decode;
                 req.success = 'success';
                next();
             });
           } catch(err) {
+            console.log(err)
             res.send({err : err});
 
             return;

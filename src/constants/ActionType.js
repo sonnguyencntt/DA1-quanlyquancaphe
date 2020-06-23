@@ -87,3 +87,16 @@ export const CHECK_REDIRECT = 'CHECK_REDIRECT';
 export const CHECK_LOADING = 'CHECK_LOADING';
 export const CHECK_LOADING1 = 'CHECK_LOADING1';
 export const REDIRECT_PAGES = 'REDIRECT_PAGES';
+
+///////DASHBOARD////
+
+// export const GET_TOTAL_REVENUE = 'GET_TOTAL_REVENUE';
+// export const GET_COUNT_BILL = 'GET_COUNT_BILL';
+// export const GET_COUNT_UNPAID_BILL  = 'GET_COUNT_UNPAID_BILL';
+// export const GET_TOTAL_UNPAID_BILL = 'GET_TOTAL_UNPAID_BILL';
+// export const GET_TOTAL_DEBIT_BILL = 'GET_TOTAL_DEBIT_BILL';
+// export const GET_SUML_DEBIT_BILL = 'GET_SUM_DEBIT_BILL';
+export const GET_STATISTICAL = 'GET_STATISTICAL';
+export const GET_CHART = 'GET_CHART';
+ //////ORDER//////
+ export const GET_ORDER = 'GET_ORDER';

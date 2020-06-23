@@ -79,7 +79,7 @@ componentWillMount()
     if (this.props.redirect == true) {
        
         return <Redirect to={{
-            pathname: '/table',
+            pathname: '/',
             
         }}
 />

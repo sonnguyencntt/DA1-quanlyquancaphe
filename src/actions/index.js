@@ -23,6 +23,27 @@ export const acFetchRoomsRequest = (data) => {
 
     };
 }
+export const acFetchOrderRequest = () => {
+   
+    return (next, getstate, extra) =>{
+
+        callApi('query/selectOrder', 'get', null).then(res =>{
+           if(res == false)
+           {
+               return;
+           }
+          console.log(res);
+          next({type : {
+            get_order :{
+                  type : 'GET_ORDER',
+                  data : res.data
+              }
+          }});
+         
+       });
+
+   };
+}
 export const acInsertRoomsRequest = (data, statusEvent) => {
    
     var status  = {};
@@ -1005,3 +1026,50 @@ export const acInsertCustomerRequest = (data, statusEvent) => {
      };
      
  }
+
+ export const acFetchDashboardRequest = (data) => {
+   
+    return (next, getstate, extra) =>{
+
+        callApi('query/getstatistical', 'POST', data).then(res =>{
+           if(res == false)
+           {
+               return;
+           }
+         res.data[0].sum_debit_bill = Number( res.data[0].sum_debit_bill)
+         res.data[0].total_revenue = Number( res.data[0].total_revenue)
+         res.data[0].total_unpaid_bill = Number( res.data[0].total_unpaid_bill)
+
+
+          next({type : {
+              get_statistical :{
+                  type : 'GET_STATISTICAL',
+                  data : res.data[0]
+              }
+          }});
+         
+       });
+
+   };
+}
+export const getchart = (data) => {
+   
+    return (next, getstate, extra) =>{
+        callApi('chart', 'POST',data).then(res =>{
+    if(res == false)
+    {
+        return;
+    }
+   next({
+       type : {
+           get_chart : {
+               type : 'GET_CHART',
+               data : res.data,
+           }
+       }
+   });
+   console.log(res);
+
+   
+});
+    }}

@@ -1,28 +1,22 @@
 import React, {Component} from 'react';
-
-
+import get_datetime from './../../getDateTime'
+import callApi from './../../ultis/apiCaller'
 import {Bar} from 'react-chartjs-2';
+import {connect} from 'react-redux';
+import * as action from '../../actions/index';
 
 class Chart extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-           
-                chartData:{
+
+   
+    
+     prop = (data)=>{
+       return {
                   labels: ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7','Chủ nhật'],
                   datasets:[
                     {
                       label : 'Doanh thu',
-                      data:[
-                        617594,
-                        181045,
-                        153060,
-                        106519,
-                        105162,
-                        95072,
-                        195072
-
-                      ],
+                      data:data,
+                      
                       backgroundColor:[
                         'rgba(255, 99, 132, 0.6)',
                         'rgba(54, 162, 235, 0.6)',
@@ -39,23 +33,39 @@ class Chart extends Component{
                   ]
                 }
              
+     }
+     componentWillMount(){
+      callApi('chart', 'POST',get_datetime()).then(res =>{
+        if(res == false)
+        {
+            return;
         }
-      }
+        console.log(res.data)
+       this.props.get_dataChart({
+           type : {
+               get_chart : {
+                   type : 'GET_CHART',
+                   data : res.data,
+               }
+           }
+       });
+       console.log(res);
     
-     
-     
+       
+    });
+     //this.props.get_dataChart(get_datetime())
+     }
  
   render(){
-      
     return (
       <div>
 
 
 	<div class="col-md-12">
   <Bar
-          data={this.state.chartData}
+          data={this.prop(this.props.data)}
           options={{
-            //legend: { display: false },
+            legend: { display: false },
             title: {
               
               display: true,
@@ -72,5 +82,22 @@ class Chart extends Component{
     )
   }
 }
+const  mapStateToProps = state =>{
+  return{
+   data : state.chart,
 
-export default Chart;
+
+  }
+}
+
+const mapDispatchToProps = (dispatch, props) =>{
+  return {
+  
+    get_dataChart : (data) =>{
+      dispatch(data);
+     
+    },
+  
+  }
+  }
+export default connect(mapStateToProps,mapDispatchToProps)(Chart); 

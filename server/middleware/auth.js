@@ -4,7 +4,7 @@ var checkCookie = require('./checkcookie')
 module.exports = {
 
     check_authenTication : (req, res, next)=>{
-        console.log(req.originalUrl);
+        console.log(req.body);
         if(req.originalUrl == '/checkpass')
         {
             next();

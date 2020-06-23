@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
 
 import Chart from '../Chart/Chart';
-
-
-
-
-
-
-
+import {connect} from 'react-redux';
+import * as action from '../../actions/index';
 
 class Content extends Component {
   
- 
-   // console.log(this.props.history.match.params.id);
- 
+	constructor(props){
+		super(props);
+		this.state = {
+		 dateNow : '00/00/0000 hh:ss PM',
+		 
+		}
+		} 
+		
+ componentWillMount(){
+	
+	var today = new Date();
+var now = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+	 this.setState({dateNow : now}, ()=>{
+		  this.props.fetchAllDashboard({date : today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()})
+	 })
+ }
   render() 
   
   {
@@ -31,7 +39,7 @@ class Content extends Component {
  
 <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 margin_contend">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<h3 class="dashboard-title">BÁO CÁO KẾT QUẢ BÁN HÀNG HÔM NAY</h3>
+	<h3 class="dashboard-title">BÁO CÁO KẾT QUẢ BÁN HÀNG HÔM NAY : Ngày {this.state.dateNow}</h3>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
 	<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
@@ -44,7 +52,10 @@ class Content extends Component {
 				
 				<span>Tổng doanh thu   </span>
 				<strong> <h4 >
-				<span >265.000</span>				</h4></strong>
+	<span >{this.props.total_revenue}</span>	
+				</h4></strong>
+				<p>Tổng số hóa đơn</p>
+	<h4><span >{this.props.count_bill}</span></h4>
 			</div>
 		</div>
 	</div>
@@ -54,10 +65,11 @@ class Content extends Component {
 				<i class="fa fa-user" aria-hidden="true"></i>
 			</div>
 			<div class="resport-data">
-				<p>Tổng số hóa đơn</p>
+				<p>Tổng hóa đơn đang nợ</p>
 				<h4 >
-				<span >0</span>				</h4>
-				
+	<span >{this.props.total_debit_bill}</span>				</h4>
+	<p>Thành tiền</p>
+	<h4><span >{this.props.sum_debit_bill}</span></h4>
 			</div>
 		</div>
 	</div>
@@ -67,11 +79,11 @@ class Content extends Component {
 				<i class="fa fa-pencil" aria-hidden="true"></i>
 			</div>
 			<div class="resport-data">
-				<p><span></span>Hóa đơn chưa thanh tóan</p>
+				<p><span></span>Tổng hóa đơn chưa thanh tóan</p>
 				<h4>
-				<span >0</span>				</h4>
-				<p>Nợ</p>
-				<h4><span >0</span></h4>
+	<span >{this.props.count_unpaid_bill}</span>				</h4>
+				<p>Thành tiền</p>
+	<h4><span >{this.props.total_unpaid_bill}</span></h4>
 			</div>
 		</div>
 	</div>
@@ -93,5 +105,28 @@ class Content extends Component {
   }
 }
 
+const  mapStateToProps = state =>{
+	console.log(state)
+	return{
+	 
+		total_revenue : state.dashboard.total_revenue,
+		count_bill : state.dashboard.count_bill,
+		total_debit_bill : state.dashboard.total_debit_bill,
+		sum_debit_bill : state.dashboard.sum_debit_bill,
+		count_unpaid_bill :state.dashboard.count_unpaid_bill,
+		total_unpaid_bill : state.dashboard.total_unpaid_bill
 
-export default Content;
+	}
+  }
+  
+  const mapDispatchToProps = (dispatch, props) =>{
+	return {
+	  fetchAllDashboard : (index) =>{
+		  dispatch(action.acFetchDashboardRequest(index));
+		 
+		},
+	 
+	}
+	}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Content); 

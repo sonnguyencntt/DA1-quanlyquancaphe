@@ -11,66 +11,52 @@ import {connect} from 'react-redux';
 
 class Table extends Component {
   
- 
-  
-  componentWillMount(){
-    CheckAuth().then((data)=>{
-      if(data == true)
-      {
-        this.props.checkRedirect({type : {
-          redirect : {
-              type : 'CHECK_REDIRECT',
-              data : true,
-                },
-                loading : {
-                  type : 'CHECK_LOADING',
-                  data : true,
-                    }}})
-        // console.log(data);
-        //  this.setState({redirect : true, loading : true});
-        // //this.state.customer.redirect = true;
-
-        return;
-      }
-      else
-      {
-        this.props.checkRedirect({type : {
-          redirect : {
-              type : 'CHECK_REDIRECT',
-              data : false,
-                },
-                loading : {
-                  type : 'CHECK_LOADING',
-                  data : true,
-                    }}})
-
-      this.setState({redirect: false, loading : true})
+  redirect_func = (data) =>{
+    this.props.redirect_page({
+      type : {
+        redirect : {
+          type : 'REDIRECT_PAGES',
+          data : data
+        }
       }
     })
-    // if(CheckAuth())
-    // {
-      
-    //   this.setState({redirect : true});
-    //   return;
-    // }
-    // this.setState({redirect: false})
+  }
+  
+  componentWillMount(){
+    if(this.props.redirect =='not_verfication' )
+    {
+     
+      CheckAuth().then((data)=>{
+        if(data == false)
+        {
+          return;
+        }
+        this.redirect_func(data);
+      })
+    }
+
+   
+   
   }
  
   render() 
   
   {
-    console.log(this.props.redirect);
-    if(this.props.redirect.loading == false)
+    console.log(this.props.redirect)
+
+    if(this.props.redirect == 'not_verfication')
     {
-     return <div></div>
+      return <div></div>
     }
-    else
-    {
-      if(this.props.redirect.redirect == false)
-      {
-       return <Redirect to='/login' />
-  
-      }
+   if(this.props.redirect == false)
+   {
+     return <Redirect to={{
+       pathname: '/login',
+       
+   }}
+ />
+   }
+     
      return (
     
 <div>
@@ -103,27 +89,27 @@ class Table extends Component {
 
    
     );
-  }
+  
 }
 }
 
 const  mapStateToProps = state =>{
   
-
-  return{
-   redirect : state.customer.redirect,
-   test : state.customer.test
-
+  console.log(state);
+    return{
+     redirect : state.redirect
+  
+    }
+  };
+  
+  
+  const mapDispatchToProps = (dispatch, props) =>{
+    return {
+      redirect_page : (tap) =>{
+        dispatch(tap)
+      },
+      
+    }
   }
-};
-const mapDispatchToProps = (dispatch, props) =>{
-  return {
-    checkRedirect : (redirect) =>{
-      dispatch(redirect)
-    },
-   
-   
-  }
-}
 
 export default connect(mapStateToProps,mapDispatchToProps)(Table);
