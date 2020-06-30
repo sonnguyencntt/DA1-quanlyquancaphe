@@ -7,14 +7,15 @@ import order from './Order/index';
 
 import chart from './dashboard/chart';
 import redirect from './redirect';
-
+import pos from './Pos'
 const appReducers = combineReducers({
    table,
    customer, 
    dashboard,
    chart,
    redirect,
-   order
+   order,
+   pos
    
 });
 

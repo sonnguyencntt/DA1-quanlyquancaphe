@@ -9,6 +9,10 @@ var customer = require('./board_type/customer')
 const jwt = require('jsonwebtoken');
 var check_accesToken =require('./../middleware/auth')
 var export_Excel = require('./export_data')
+var bill = require('./board_type/bill/index');
+var query_bill = require('./board_type/bill/query')
+
+
 
 router.get('/', (req, res) =>{
     res.send('ahihi')
@@ -226,60 +230,22 @@ router.post('/chart',(req, res)=>{
                 })        
 
  router.get('/query/selectOrder',(req, res)=>{
-                  conn.query("SELECT bill.IdBill, staff.name, tables.TableName, customers.CustomerName,"+
-                  "DATE_FORMAT(bill.create_at , '%d-%m-%y %h:%m:%s') as create_at,bill.idStatus,bill.Totalprice,"+
-                  " bill.Note, GROUP_CONCAT(billdetail.IdDetail SEPARATOR '@#$') as idbilldetail "+
-                  " ,GROUP_CONCAT(billdetail.IdMenu SEPARATOR '@#$') as idmenu, GROUP_CONCAT(billdetail.Quantity SEPARATOR '@#$') as quantity"+
-                  ", GROUP_CONCAT(billdetail.Price SEPARATOR '@#$') as billdetail_price , GROUP_CONCAT(menus.NameMenu SEPARATOR '@#$') as namemenu"+
-                  ",GROUP_CONCAT(menus.Unit SEPARATOR '@#$') as unit,GROUP_CONCAT(menus.Price SEPARATOR '@#$') as menu_price FROM bill"+
-                  ", billdetail,users,tables,customers,staff, menus  WHERE bill.IdBill = billdetail.IdBill and bill.IdUser=users.UserId"+
-                  " and bill.IdTable = tables.IdTable and bill.IdCustomer = customers.IdCustomer AND users.id_staff = staff.id AND"+
-                  " billdetail.IdMenu = menus.IdMenu GROUP BY billdetail.IdBill",(err, result)=>{
-                    if(err)
-                    {
-                        return;
-                    }
-                    if(result.length == 0)
-                    {
-                        res.send(result);
-                        return;
-                    }
-                       for(var index = 0 ; index <=result.length ; index++){
-                            if(index == result.length)
-                            {
-                                console.log(result);
-                                res.send(result);
-                                return;
-                            }
-                           
-                        var bill = [{}];
-                        var arr_idbilldetail = result[index].idbilldetail.split("@#$");
-                        
-                        for(var index_menu = 0 ; index_menu<arr_idbilldetail.length;index_menu++){
-                          
-                          bill[index_menu] = 
-                              {
-                                namemenu : result[index].namemenu.split("@#$")[index_menu],
-                                idbilldetail : result[index].idbilldetail.split("@#$")[index_menu],
-                                idmenu : result[index].idmenu.split("@#$")[index_menu],
-                                quantity : result[index].quantity.split("@#$")[index_menu],
-                                billdetail_price : result[index].billdetail_price.split("@#$")[index_menu],
-                                unit : result[index].unit.split("@#$")[index_menu],
-                                menu_price : result[index].menu_price.split("@#$")[index_menu]
-                            }
-                              
-                          
-                       
-                      
-                        }
-                       
-                        result[index].menu_detail = JSON.stringify([...bill]);
-                        
-                    }
-
-                  })
+     console.log('da vao selectorder')
+                bill.query_select(res,conn)
                     })
-                   
+                    router.post('/query/searchforbill',(req, res)=>{
+                        console.log(req.body)
+                        bill.query_searchfor_Idbill(req.body.data, res, conn)
+                            })
+                            router.post('/query/searchfordatetime',(req, res)=>{
+                                var fromDate = req.body.from ;
+                                var nextDate = req.body.to ;
+                                bill.query_searchfor_datetime(fromDate,nextDate, res, conn)
+                                    })  
+                                    router.post('/query/exportfrombill',(req, res)=>{
+                                        console.log(query_bill.query_exportExcel)
+                                        bill.query_exportData(query_bill.query_exportExcel, res, conn)
+                                            })                                                                                               
      // var decoded = jwt.decode('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNvbm5ndXllbiIsIm5hbWUiOiJob25nc29uIiwiaWF0IjoxNTkwNDY1NTc4LCJleHAiOjE1OTA0NjU2MDh9.');
 
 module.exports = router ;

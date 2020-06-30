@@ -49,6 +49,9 @@ module.exports.query_Room = (sql_query, sql_select, pool, res) =>{
     {
         
         pool.query(sql_query, function(error, result_insert){
+          console.log('dasd');
+          console.log(result_insert)
+          console.log(error);
             if (error)
             {
               res.send({error : Type.Type});

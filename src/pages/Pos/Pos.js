@@ -38,16 +38,25 @@ class Pos extends Component {
       <div class="col-md-6 content-listmenu" id="content-listmenu">
 				<div class="row" id="bill-info">
 					
-					<div class="col-md-12 ">
-						<div class="col-md-12 p-0 input-group flex">
-							<input type="text " id="customer-infor" placeholder="Tìm khách hàng" class="form-control size-tab"/>
-							<div class="input-group-append">
-    							<button class="btn btn-primary size-tab" data-toggle="modal" data-target="#ModelAddcustomer"><i class="fa fa-plus" aria-hidden="true"></i></button>
-  							</div>
-							<div id="result-customer"></div>
-							<span class="del-customer"></span>
+						<div class="col-md-12 p-0 input-group flex" style = {{display : 'flex'}}>
+							
+							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+								<span style = {{
+									fontSize: '30px',
+									fontFamily: 'cursive',
+									color: 'mediumvioletred',
+								}}>Bàn 1</span>
+							</div>
+							
+							
+							<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+							<input style = {{width :'92%'}} type="text " id="customer-infor" placeholder="Tìm khách hàng" class="form-control size-tab"/>
+    						<button style = {{width :'7%'}} class="btn btn-primary size-tab" data-toggle="modal" data-target="#ModelAddcustomer"><i class="fa fa-plus" aria-hidden="true"></i></button>
+							{/* <div id="result-customer"></div>
+							<span class="del-customer"></span> */}
+							</div>
+							
 						</div>
-					</div>
 					
 				</div>
 				<div class="panel panel-primary set-border">

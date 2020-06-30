@@ -100,3 +100,9 @@ export const GET_STATISTICAL = 'GET_STATISTICAL';
 export const GET_CHART = 'GET_CHART';
  //////ORDER//////
  export const GET_ORDER = 'GET_ORDER';
+
+ //POS///
+ export const GET_LIST_AREAS = 'GET_LIST_AREAS';
+ export const GET_LIST_TABLES = 'GET_LIST_TABLES';
+ export const GET_LIST_MENU = 'GET_LIST_MENU';
+ export const GET_LIST_CATES = 'GET_LIST_CATES';

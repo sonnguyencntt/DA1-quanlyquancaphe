@@ -43,6 +43,7 @@ onDelete = (data) =>{
     showData = (datas, id) =>
     {
     var result = null;
+    var style = {width : '100px'}
     if(datas.length > 0)
     {
       
@@ -61,7 +62,7 @@ onDelete = (data) =>{
     <td>{data.Email}</td>
     <td>{data.Address}</td>
     <td>{data.Birthday}</td>
-    <td>{data.Avatar}</td>
+    <img style = {style} src={data.Avatar} alt=""/>
     <td>{data.Debit}</td>
 
     <td>{data.Note}</td>

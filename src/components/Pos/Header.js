@@ -35,15 +35,69 @@ class Header extends Component {
 	   
 		   <div class="collapse navbar-collapse navbar-ex1-collapse">
 			  
-			   <form class="navbar-form navbar-left" role="search">
-				   <div class="form-group">
-					   <input  type="text" class="form-control search input-size" placeholder="Nhập Tên Mặt Hàng"/>
+			   <div class="navbar-form navbar-left bill_Search" role="search" >
+				   <div class="form-group" style = {{marginLeft : '310px',width : '400px'}  }>
+					   {/* <input  type="text" class="form-control search input-size" placeholder="Nhập Tên Mặt Hàng"/> */}
+					   
+					   <input  type="text" id="myInput" class="form-control " onkeyup="myFunction()" placeholder="Search for names.."
+					   />
+
+
+<div class="container-fluid child-of-listmenu"
+								style = {
+									{
+									paddingRight : '0px',
+									paddingLeft  : '0px',
+									position: 'fixed',
+   									 width: '400px',
+								}
+									
+									}
+>
+<div class="container-fluid style-of-container menu_hover" onMouseOver = {()=>{console.log('1')}} style = {
+									{
+									border: "1px solid #ddd",
+									paddingRight : '0px',
+									paddingLeft  : '0px',
+									backgroundColor : 'white',
+									cursor: 'pointer',
+									display:'flex',
+									
+								
+								}
+									
+									}>
+<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" style = {{
+	marginTop : 'auto',
+	marginBottom : 'auto'
+}}>
+	<span style = {{fontSize : '18px'}}>Cà phê sữa đá</span>	
+
+</div>
+
+<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style = {{marginTop : 'auto',
+	marginBottom : 'auto'}}>
+<img style={{    
+	height: '60px',
+    width: '60px',
+    marginTop: '5px',
+	marginBottom: '5px',
+	float : "right"}} src="https://media.cooky.vn/recipe/g1/2022/s/recipe2022-prepare-step11-635711695846648568.jpg" alt=""/>
+
+</div>
+</div>
+
+
+</div>
+
+
+
 				   </div>
 				  
-			   </form>
+			   </div>
 			   <ul class="nav navbar-nav navbar-right">
 				  
-				   <li class="dropdown">
+				   <li class="dropdown " >
 					   <a className="text-size text-color" href="#" >Quay lại <b class="fa fa-arrow-left"></b></a>
 					  
 				   </li>

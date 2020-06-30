@@ -1,5 +1,7 @@
 import * as Types from './../constants/ActionType';
 import callApi,  * as middleware from './../ultis/apiCaller';
+import * as export_Data from './exportdata';
+
 middleware.middleWare_resPonse();
 
 export const acFetchRoomsRequest = (data) => {
@@ -1073,3 +1075,53 @@ export const getchart = (data) => {
    
 });
     }}
+export const acSearchBillIdbill = (id) =>{
+    return (next, getstate, extra) =>{
+
+        callApi('query/searchforbill', 'post', id).then(res =>{
+           if(res == false)
+           {
+               return;
+           }
+          console.log(res);
+          next({type : {
+            get_order :{
+                  type : 'GET_ORDER',
+                  data : res.data
+              }
+          }});
+         
+       })
+       .catch((err)=>{
+           console.log(err)
+       });
+
+   };
+}   
+export const acseachForDatetime = (date) =>{
+    return (next, getstate, extra) =>{
+
+        callApi('query/searchfordatetime', 'post', date).then(res =>{
+           if(res == false)
+           {
+               return;
+           }
+          console.log(res);
+          next({type : {
+            get_order :{
+                  type : 'GET_ORDER',
+                  data : res.data
+              }
+          }});
+         
+       })
+       .catch((err)=>{
+           console.log(err)
+       });
+
+   };
+} 
+export const exportExcelFromBill = ()=>{
+	export_Data.export_Data();
+
+}
