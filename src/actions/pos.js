@@ -93,3 +93,24 @@ export const fetchMenuforSelectONrequest = (data) => {
 
    };
 }
+export const searchForMenuOnRequest = (data) => {
+   
+    return (next, getstate, extra) =>{
+
+        callApi('pos/searchmenu', 'post',data ).then(res =>{
+           if(res == false)
+           {
+               return;
+           }
+          console.log(res);
+          next({type : {
+           
+            get_list_forsearchMenu : {
+                type : 'GET_LIST_FEATURE_SEARCH_MENU',
+                data : res.data.menu
+              }
+          }});
+       });
+
+   };
+}

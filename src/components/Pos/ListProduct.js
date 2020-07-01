@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-
+import * as Feature from './../../actions/pos/feature'
 
 
 ///////
@@ -14,6 +14,29 @@ import {connect} from 'react-redux';
 ///////////
 class ListProduct extends Component {
   
+
+
+
+appendTable = (id) =>{
+    var appendData = Feature.append(id, this.props.menu.menu, this.props.menu.show_list_table);
+    if(appendData == true)
+    {
+        return;
+    }
+    var oldData = [...this.props.menu.show_list_table]
+
+    var pushToArray = oldData.push(appendData)
+    this.props.append_Data({
+        type : {
+           
+            feature_appendmenu : {
+                type : 'FEATURE_APPENDMENU',
+                data : oldData
+              }
+          }
+    })
+}
+
     showList_Menu = (menus) =>
     {
     var result = null;
@@ -29,9 +52,12 @@ class ListProduct extends Component {
           
 <li style = {{backgroundColor: '#baaba1',
                                         borderRadius: '10px'}}
-     class="tb-active"><a href="#" onclick="cms_select_menu()" title="">
+     class="tb-active"><a onClick = {(e)=>{
+        e.preventDefault();
+        this.appendTable(menu.IdMenu)
+        }}  href="#" onclick="cms_select_menu()" title="">
                         <div class="img-product">
-                            <img style = {{borderRadius: '10px'}} src={menu.Images} alt=""/>
+                            <img  style = {{borderRadius: '10px'}} src={menu.Images} alt=""/>
                         </div>
                         <div class="product-info">
      <span class="product-name">{menu.NameMenu}</span>
@@ -99,4 +125,13 @@ const  mapStateToProps = state =>{
 	 menu : state.pos
 	}
   };
-export default connect(mapStateToProps,null)(ListProduct);
+
+  const mapDispatchToProps = (dispatch, props) =>{
+    return {
+      append_Data : (action) =>{
+        dispatch(action)
+      }
+     
+    }
+  } 
+export default connect(mapStateToProps,mapDispatchToProps)(ListProduct);

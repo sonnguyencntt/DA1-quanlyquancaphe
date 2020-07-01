@@ -432,6 +432,7 @@ float: right;
 	color: #F45564;
 	cursor: pointer;
 }
+
 .table-list .table-list-content ul li{
 	float: left;
 	line-height: 70px;
@@ -448,6 +449,9 @@ float: right;
 }
 .table-list .table-list-content ul li.tb-active{
 	background:#FF5823;
+}
+.table-list .table-list-content ul li.tb-active :hover{
+	background-size: 100px;
 }
 .table-list .table-list-content ul li.inused{
 	background:#F94646;
@@ -478,7 +482,11 @@ float: right;
 	height: 75px;
 	width: 100%;
 	text-align: center;
+	transition: transform .2s;
 }
+.product-list .product-list-content ul li a .img-product:hover {
+	transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }
 .product-list .product-list-content ul li a .img-product img{
 	height: 100%;
 	width: auto;

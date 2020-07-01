@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-
+import * as action from '../../actions/pos';
+import {connect} from 'react-redux';
 
 ///////
 
@@ -12,9 +13,126 @@ import React, { Component } from 'react';
 
 ///////////
 class Header extends Component {
-  
+	constructor(props) {
+		super(props);
+	  
+		this.state = {
+		 search : '',
+		};
+	  }
+	 
+		
    // console.log(this.props.history.match.params.id);
+   showmenu = (menus, id) =>
+    {
+    var result = null;
+    var style = {width : '100px'}
+    if(menus.length > 0)
+    {
+      
+      result = menus.map((menu,index) =>
+      {
+
+		if(typeof menu.non_Query != "undefined")
+		{
+			return;
+		}
+		else
+		{
+			return (
  
+				<div class="container-fluid style-of-container menu_hover" onMouseOver = {()=>{console.log('1')}} style = {
+					{
+					border: "1px solid #ddd",
+					paddingRight : '0px',
+					paddingLeft  : '0px',
+					backgroundColor : 'white',
+					cursor: 'pointer',
+					display:'flex',
+					
+				
+				}
+					
+					}>
+		<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" style = {{
+		marginTop : 'auto',
+		marginBottom : 'auto'
+		}}>
+		<span style = {{fontSize : '18px'}}>{menu.NameMenu}</span>	
+		
+		</div>
+		
+		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style = {{marginTop : 'auto',
+		marginBottom : 'auto'}}>
+		<img style={{    
+		height: '60px',
+		width: '60px',
+		marginTop: '5px',
+		marginBottom: '5px',
+		float : "right"}} src={menu.Images} alt=""/>
+		
+		</div>
+		</div>
+			  
+			  
+			   );
+		}
+    
+      })
+	}
+	else
+	{
+		
+			return(
+				<div class="container-fluid style-of-container menu_hover" onMouseOver = {()=>{console.log('1')}} style = {
+					{
+					border: "1px solid #ddd",
+					paddingRight : '0px',
+					paddingLeft  : '0px',
+					backgroundColor : 'white',
+					cursor: 'pointer',
+					display:'flex',
+					
+				
+				}
+					
+					}>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style = {{
+		marginTop : 'auto',
+		marginBottom : 'auto',
+		height : '40px'
+		}}>
+		<span style = {{fontSize : '18px'}}>Not result for search</span>	
+		
+		</div>
+		
+		
+		</div>
+			)
+		
+		
+		
+	}
+   
+   return result
+	};
+	
+	searchMenu = (data)=>{
+		// if(data == '')
+		// {
+		// 	this.props.valueDefaultNull({
+		// 		type : {
+           
+		// 			get_list_forsearchMenu : {
+		// 				type : 'GET_LIST_FEATURE_SEARCH_MENU',
+		// 				data : []
+		// 			  }
+		// 		  }
+		// 	})
+		// 	return;
+		// }
+		this.props.searchForMenu({data : data})
+	}
   render() 
   
   {
@@ -39,7 +157,10 @@ class Header extends Component {
 				   <div class="form-group" style = {{marginLeft : '310px',width : '400px'}  }>
 					   {/* <input  type="text" class="form-control search input-size" placeholder="Nhập Tên Mặt Hàng"/> */}
 					   
-					   <input  type="text" id="myInput" class="form-control " onkeyup="myFunction()" placeholder="Search for names.."
+					   <input onChange = {(e)=>{
+							this.searchMenu(e.target.value);
+						   
+					   }}  type="text" id="myInput" class="form-control " onkeyup="myFunction()" placeholder="Search for names.."
 					   />
 
 
@@ -54,38 +175,9 @@ class Header extends Component {
 									
 									}
 >
-<div class="container-fluid style-of-container menu_hover" onMouseOver = {()=>{console.log('1')}} style = {
-									{
-									border: "1px solid #ddd",
-									paddingRight : '0px',
-									paddingLeft  : '0px',
-									backgroundColor : 'white',
-									cursor: 'pointer',
-									display:'flex',
-									
-								
-								}
-									
-									}>
-<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" style = {{
-	marginTop : 'auto',
-	marginBottom : 'auto'
-}}>
-	<span style = {{fontSize : '18px'}}>Cà phê sữa đá</span>	
 
-</div>
 
-<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style = {{marginTop : 'auto',
-	marginBottom : 'auto'}}>
-<img style={{    
-	height: '60px',
-    width: '60px',
-    marginTop: '5px',
-	marginBottom: '5px',
-	float : "right"}} src="https://media.cooky.vn/recipe/g1/2022/s/recipe2022-prepare-step11-635711695846648568.jpg" alt=""/>
-
-</div>
-</div>
+{this.showmenu(this.props.search_menu.search_menu)}
 
 
 </div>
@@ -106,39 +198,30 @@ class Header extends Component {
 	   </nav>
 	   </div>
 	   </div>
-    //  <div className="position-fixed">
-	// 	<div id="topsidebar">
-	// 	<nav class="navbar navbar-color" role="navigation">
-	// 		<div class="navbar-header">
-	// 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-	// 				<span class="sr-only color">Toggle navigation</span>
-	// 				<span class="icon-bar color"></span>
-	// 				<span class="icon-bar color"></span>
-	// 				<span class="icon-bar color"></span>
-	// 			</button>
-	// 			<a class="navbar-brand text-color" href="#">Quản lý Quán Cà Phê</a>
-	// 		</div>
-		
-	// 		<div class="collapse navbar-collapse navbar-ex1-collapse collapse-index">
-				
-	// 			<ul class="nav navbar-nav navbar-right">
-	// 				<li class="dropdown">
-	// 					<a href="#" class="dropdown-toggle text-color" data-toggle="dropdown">Xin chào Admin<b class="caret " ></b></a>
-	// 					<ul class="dropdown-menu">
-	// 						<li><a href="#">Action</a></li>
-	// 						<li><a href="#">Another action</a></li>
-	// 						<li><a href="#">Something else here</a></li>
-	// 						<li><a href="#">Separated link</a></li>
-	// 					</ul>
-	// 				</li>
-	// 			</ul>
-	// 		</div>
-	// 	</nav>
-		
-	// 	</div>
-    //  </div>
+   
     );
   }
 }
-
-export default Header;
+const  mapStateToProps = state =>{
+  
+	return{
+	 search_menu : state.pos
+	}
+  };
+  
+  
+  const mapDispatchToProps = (dispatch, props) =>{
+	return {
+	  
+	  searchForMenu : (data) =>{
+		dispatch(action.searchForMenuOnRequest(data));
+	   
+	  },
+	  valueDefaultNull : (action) =>{
+		  dispatch(action)
+	  }
+	 
+	}
+  }
+  
+export default connect(mapStateToProps,mapDispatchToProps)(Header);

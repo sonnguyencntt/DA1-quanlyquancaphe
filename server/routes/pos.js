@@ -45,4 +45,16 @@ router.get('/getarea', function(req, res, next) {
     })
 
 });
+router.post('/searchmenu', function(req, res, next) {
+    if(req.body.data == '')
+    {
+        res.send({menu : [{non_Query : 'non_query'}]});
+        return;
+    }
+console.log("SELECT * FROM menus WHERE IdMenu LIKE %"+req.body.data+"% or NameMenu LIKE '%"+req.body.data+"%'")
+    conn.query("SELECT * FROM menus WHERE IdMenu LIKE '%"+req.body.data+"%' or NameMenu LIKE '%"+req.body.data+"%' ",(err_,result_)=>{
+        res.send({menu : result_})
+    })
+
+});
 module.exports = router;

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Header from './../../components/Pos/Header';
 import Tabs from '../../components/Pos/Tabs';
+import * as action from '../../actions/index';
 import {connect} from 'react-redux';
+import * as Feature from './../../actions/pos/feature'
 
 
 
@@ -16,13 +18,65 @@ class Pos extends Component {
     super(props);
     
   }
- 
- onClick = () =>{
-   this.setState({});
+ changeQuantity = (id, value, list) =>{
+	var newValue = Feature.changequantity(id , value, list);
+	console.log(newValue)
+	this.props.changeQuantity({
+		
+			type : {
+			   
+				feature_appendmenu : {
+					type : 'FEATURE_APPENDMENU',
+					data : newValue
+				  }
+			  }
+		}
+	)
  }
+  showMenu = (menus, id) =>
+  {
+  var result = null;
+  var style = {width : '100px'}
+  if(menus.length > 0)
+  {
+	
+	result = menus.map((menu,index) =>
+	{
+	  
+   return (
+
+	<tr >
+	<td>{index+1}</td>
+
+   <td>{menu.NameMenu}</td>
+	<td><div class="input-group spinner">
+			<button style = {{width : "15%", float : "left",borderTopLeftRadius: '5px',borderBottomLeftRadius: '5px'}} class=" btn btn-default"><i class="fa fas fa-minus"></i></button>
+			<input onChange = {(e)=>{
+				this.changeQuantity(menu.IdMenu, e.target.value, this.props.feature.show_list_table)
+			}}  style = {{width : "70%"}} type="number" class="form-control quantity-product-oders" name="" defaultValue={menu.Quantity}/>
+			<button style = {{width : "15%",borderTopRightRadius: '5px',borderBottomRightRadius: '5px'}} class=" btn btn-default"><i class="fa fas fa-plus"></i></button>
+		</div></td>
+	<td><input type="text" class="form-control price-order" disabled="disabled" name="" value={menu.Price}/></td>
+   <td class="text-center total-money">{menu.TotalPrice}</td>
+	<td class="text-center">
+		<button style = {{backgroundColor : 'white'}}
+		><i style = {{fontSize: '25px',
+color: 'red'}} class="fa fa-times-circle del-pro-order"></i></button>
+		
+	</td>
+</tr>
+	
+	
+	 );
+	})
+  }
+ 
+ return result
+  };
   render() 
   
   {
+	  console.log(this.props)
     return (
     <div>
       
@@ -66,16 +120,20 @@ class Pos extends Component {
 		  <div class="panel-body">
 				
 				<div class="table-responsive bill-detail-content">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th></th>
-							</tr>
+					<table class="table table-hover table-bordered" >
+						<thead style = {{backgroundColor : '#bebaba'}}>
+						<tr>
+						      <th >STT</th>
+
+						      <th >Tên sản phẩm</th>
+						      <th >Số lượng</th>
+						      <th scope="col">Gía bán</th>
+						      <th scope="col">Thành Tiền</th>
+						      <th scope="col"></th>
+						    </tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td></td>
-							</tr>
+						{this.showMenu(this.props.feature.show_list_table)}
 						</tbody>
 					</table>
 				</div>
@@ -153,10 +211,19 @@ class Pos extends Component {
 
 const  mapStateToProps = state =>{
   
-	console.log(state);
-	  return{
-	  table:state
-	
+	return{
+	feature : state.pos
+	}
+  };
+  
+  
+  const mapDispatchToProps = (dispatch, props) =>{
+	return {
+	  changeQuantity : (action) =>{
+		  dispatch(action)
 	  }
-	};
-export default connect(mapStateToProps,null)(Pos);
+	}
+  }
+  
+  
+  export default connect(mapStateToProps,mapDispatchToProps)(Pos);
