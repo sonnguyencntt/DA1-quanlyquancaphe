@@ -32,7 +32,7 @@ class NumberTable extends Component {
 
 					
          
-    <li style = {{backgroundColor : '#615a57'}}  onclick="cms_load_pos()">{table.TableName}</li>
+    <li   style = {{backgroundColor : '#615a57'}}  onClick = {()=>{}}>{table.TableName}</li>
      
       );
      })

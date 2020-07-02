@@ -299,7 +299,12 @@ html{
 	color:#fff;
 	font-size:16px;
 	cursor: pointer;
+	transition: transform .2s;
 }
+.bill-action .btn-pay:hover{
+
+	animation: wiggle 1s ease;
+	animation-iteration-count: 2;}
 .text-right{
     margin-top: 15px;
 }
@@ -312,7 +317,37 @@ html{
 	color:#fff;
 	font-size:16px;
 	cursor: pointer;
+	transition: transform .2s;
+
 }
+.bill-action .btn-print:hover{
+	animation: wiggle 1s ease;
+  animation-iteration-count: 2;
+
+}
+@keyframes wiggle {
+	20% {
+	  transform: translateX(4px);
+	}
+	40% {
+	  transform: translateX(-4px);
+	}
+	60% {
+	  transform: translateX(2px);
+	}
+	80% {
+	  transform: translateX(-1px);
+	}
+	100% {
+	  transform: translateX(0);
+	}
+  }
+  
+  .wiggle:hover {
+	animation: wiggle 1s ease;
+	animation-iteration-count: 1;
+  }
+
 .bill-action .total-pay{
 	color: red;
 	font-size: 20px;
@@ -446,6 +481,22 @@ float: right;
 	text-align: center;
 	position: relative;
 	vertical-align: middle;
+	transition: transform .2s;
+
+}
+.table-list .table-list-content ul li:hover{
+	/* .pos-list-table{
+		transition: transform .2s;
+	
+	 }  */
+	 /* .pos-list-table :hover{ */
+		background-color: rgb(215, 144, 114) !important ;
+
+		transform: scale(1.5);
+		z-index: 1;
+		 /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+	
+	 /* }  */
 }
 .table-list .table-list-content ul li.tb-active{
 	background:#FF5823;
@@ -487,6 +538,7 @@ float: right;
 .product-list .product-list-content ul li a .img-product:hover {
 	transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
   }
+ 
 .product-list .product-list-content ul li a .img-product img{
 	height: 100%;
 	width: auto;

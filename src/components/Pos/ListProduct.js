@@ -16,8 +16,16 @@ class ListProduct extends Component {
   
 
 
+  totalPrice = (list) =>{
+	  var total = 0
+	  for(var i =0; i<list.length ; i++)
+	  {
+		  total = Number(list[i].TotalPrice) + Number(total)
+	  }
+	  return total;
 
-appendTable = (id) =>{
+  }
+appendTable = (id, guestMoney) =>{
     var appendData = Feature.append(id, this.props.menu.menu, this.props.menu.show_list_table);
     if(appendData == true)
     {
@@ -25,14 +33,26 @@ appendTable = (id) =>{
     }
     var oldData = [...this.props.menu.show_list_table]
 
-    var pushToArray = oldData.push(appendData)
+    var pushToArray = oldData.push(appendData);
+    var totalPrice = this.totalPrice(oldData);
+    var extraMoney = Number(guestMoney) - Number(totalPrice);
+
+
     this.props.append_Data({
         type : {
            
             feature_appendmenu : {
                 type : 'FEATURE_APPENDMENU',
                 data : oldData
-              }
+              },
+              payment_total: {
+                type : 'PAYMENT_TOTAL',
+                data : totalPrice
+                },
+                extra_money: {
+                  type : 'EXTRA_MONEY',
+                  data : extraMoney
+                  },
           }
     })
 }
@@ -54,7 +74,7 @@ appendTable = (id) =>{
                                         borderRadius: '10px'}}
      class="tb-active"><a onClick = {(e)=>{
         e.preventDefault();
-        this.appendTable(menu.IdMenu)
+        this.appendTable(menu.IdMenu, this.props.menu.guest_money)
         }}  href="#" onclick="cms_select_menu()" title="">
                         <div class="img-product">
                             <img  style = {{borderRadius: '10px'}} src={menu.Images} alt=""/>

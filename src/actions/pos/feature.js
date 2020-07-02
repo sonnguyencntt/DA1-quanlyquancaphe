@@ -23,6 +23,7 @@ export const append = (id, list, listMenu)=>{
 
 
 export const changequantity = (id, value, list) =>{
+    console.log(value)
     console.log(value);
     var newList = [...list]
     for(var i = 0; i < newList.length; i++)
@@ -38,6 +39,20 @@ export const changequantity = (id, value, list) =>{
     return newList
 }
 
+export const deleteMenu = (id, list) =>{
+    
+    var newList = [...list]
+    for(var i = 0; i < newList.length; i++)
+    {
+        if(newList[i].IdMenu == id)
+        {
+            newList.splice(i, 1)
+            return newList;
+        }
+
+    }
+    return newList
+}
 function checkExsit(id, listmenu){
 for(var i = 0; i< listmenu.length ; i++)
 {

@@ -18,9 +18,19 @@ class Pos extends Component {
     super(props);
     
   }
- changeQuantity = (id, value, list) =>{
+  totalPrice = (list) =>{
+	  var total = 0
+	  for(var i =0; i<list.length ; i++)
+	  {
+		  total = Number(list[i].TotalPrice) + Number(total)
+	  }
+	  return total;
+
+  }
+ changeQuantity = (id, value, list, guestMoney) =>{
 	var newValue = Feature.changequantity(id , value, list);
-	console.log(newValue)
+	var totalPrice = this.totalPrice(newValue);
+	var extraMoney = Number(guestMoney) - Number(totalPrice);
 	this.props.changeQuantity({
 		
 			type : {
@@ -28,7 +38,41 @@ class Pos extends Component {
 				feature_appendmenu : {
 					type : 'FEATURE_APPENDMENU',
 					data : newValue
-				  }
+				  },
+				  payment_total: {
+					type : 'PAYMENT_TOTAL',
+					data : totalPrice
+				  },
+				  extra_money: {
+					type : 'EXTRA_MONEY',
+					data : extraMoney
+				  },
+			  },
+			  
+		}
+	)
+ }
+ deleteMenu = (id, list, guestMoney) =>{
+	var newValue = Feature.deleteMenu(id ,  list);
+	var totalPrice = this.totalPrice(newValue);
+	var extraMoney = Number(guestMoney) - Number(totalPrice);
+
+	this.props.changeQuantity({
+		
+			type : {
+			   
+				feature_appendmenu : {
+					type : 'FEATURE_APPENDMENU',
+					data : newValue
+				  },
+				  payment_total: {
+					type : 'PAYMENT_TOTAL',
+					data : totalPrice
+				  },
+				  extra_money: {
+					type : 'EXTRA_MONEY',
+					data : extraMoney
+				  },
 			  }
 		}
 	)
@@ -50,16 +94,24 @@ class Pos extends Component {
 
    <td>{menu.NameMenu}</td>
 	<td><div class="input-group spinner">
-			<button style = {{width : "15%", float : "left",borderTopLeftRadius: '5px',borderBottomLeftRadius: '5px'}} class=" btn btn-default"><i class="fa fas fa-minus"></i></button>
+			<button  onClick = {(e)=>{
+				this.changeQuantity(menu.IdMenu, Number(menu.Quantity) - 1, this.props.feature.show_list_table, this.props.feature.guest_money )
+			}} style = {{width : "15%", float : "left",borderTopLeftRadius: '5px',borderBottomLeftRadius: '5px'}} class=" btn btn-default"><i class="fa fas fa-minus"></i></button>
 			<input onChange = {(e)=>{
-				this.changeQuantity(menu.IdMenu, e.target.value, this.props.feature.show_list_table)
-			}}  style = {{width : "70%"}} type="number" class="form-control quantity-product-oders" name="" defaultValue={menu.Quantity}/>
-			<button style = {{width : "15%",borderTopRightRadius: '5px',borderBottomRightRadius: '5px'}} class=" btn btn-default"><i class="fa fas fa-plus"></i></button>
+				this.changeQuantity(menu.IdMenu, e.target.value, this.props.feature.show_list_table,this.props.feature.guest_money)
+			}}  style = {{width : "70%"}} type="number" class="form-control quantity-product-oders" name="" defaultValue={menu.Quantity} value = {menu.Quantity}/>
+			<button onClick = {(e)=>{
+				this.changeQuantity(menu.IdMenu, Number(menu.Quantity) + 1, this.props.feature.show_list_table,this.props.feature.guest_money)
+			}} style = {{width : "15%",borderTopRightRadius: '5px',borderBottomRightRadius: '5px'}} class=" btn btn-default"><i class="fa fas fa-plus"></i></button>
 		</div></td>
 	<td><input type="text" class="form-control price-order" disabled="disabled" name="" value={menu.Price}/></td>
    <td class="text-center total-money">{menu.TotalPrice}</td>
 	<td class="text-center">
-		<button style = {{backgroundColor : 'white'}}
+		<button 
+		onClick = {(e)=>{
+			this.deleteMenu(menu.IdMenu, this.props.feature.show_list_table,this.props.feature.guest_money)
+		}}
+		style = {{backgroundColor : 'white'}}
 		><i style = {{fontSize: '25px',
 color: 'red'}} class="fa fa-times-circle del-pro-order"></i></button>
 		
@@ -179,19 +231,39 @@ color: 'red'}} class="fa fa-times-circle del-pro-order"></i></button>
  						<div class="row form-group">
 							<label class="col-form-label col-md-4"><b>Tổng cộng</b></label>
 							<div class="col-md-8">
-								<input type="text" value="0" class="form-control total-pay" disabled="disabled"/>
+								<input type="text"  value = {this.props.feature.payment_total} class="form-control total-pay" disabled="disabled"/>
 							</div>
 						</div>
 						<div class="row form-group">
 							<label class="col-form-label col-md-4"><b>Khách Đưa</b></label>
 							<div class="col-md-8">
-								<input type="text" class="form-control customer-pay" value="0" placeholder="Nhập số điền khách đưa"/>
+								<input 
+								onChange = {(e)=>{
+									var extraMoney = Number(e.target.value) - Number(this.props.feature.payment_total);
+									this.props.extraMoney({
+		
+										type : {
+										   
+											extra_money : {
+												type : 'EXTRA_MONEY',
+												data : extraMoney
+											  },
+											  guest_money : {
+												type : 'GUEST_MONEY',
+												data : e.target.value
+											  }
+											  
+										  }
+									}
+								)
+								}}
+								 type="text"  class="form-control customer-pay" defaultValue={this.props.feature.guest_money}  placeholder="Nhập số điền khách đưa"/>
 							</div>
 						</div>
 						<div class="row form-group">
 							<label class="col-form-label col-md-4"><b>Tiền thừa</b></label>
 							<div class="col-md-8 excess-cash">
-								0
+							{this.props.feature.extra_money}
 							</div>
 						</div>
  					</div>
@@ -221,7 +293,10 @@ const  mapStateToProps = state =>{
 	return {
 	  changeQuantity : (action) =>{
 		  dispatch(action)
-	  }
+	  },
+	  extraMoney : (action) =>{
+		dispatch(action)
+	}
 	}
   }
   
