@@ -3,6 +3,7 @@ import Menu from './Menu';
 import NumberTable from './NumberTable';
 import MenuProduct from './MenuProduct';
 import ListProduct from './ListProduct';
+import { connect } from 'react-redux';
 
 
 
@@ -21,18 +22,18 @@ class Tabs extends Component {
     super(props);
   
     this.state = {
-      style_forListTable : {
-        backgroundColor : '#eb9898',
-      },
-      style_forListMenu : {
-        backgroundColor : '',
-      },
-      tab : 'table'
+      // style_forListTable : {
+      //   backgroundColor : '#eb9898',
+      // },
+      // style_forListMenu : {
+      //   backgroundColor : '',
+      // },
+      // tab : 'table'
     };
   }
    // console.log(this.props.history.match.params.id);
   showTab = ()=>{
-    if(this.state.tab == 'table')
+    if(this.props.pos.tab_controll == 'table')
     {
       return(
         <Fragment>
@@ -72,12 +73,29 @@ class Tabs extends Component {
                                        var style_table = {
                                         backgroundColor : '#eb9898'
                                        }
-                                        this.setState({tab : 'table',
-                                        style_forListMenu : style_menu,
-                                        style_forListTable : style_table
-                                                      });
-                                                   
-              }} style = {this.state.style_forListTable} >
+                                        // this.setState({tab : 'table',
+                                        // style_forListMenu : style_menu,
+                                        // style_forListTable : style_table
+                                        //               });
+                        this.props.changeTab({
+                          type : {
+                            tab_pos_controll : {
+                                type : 'TAB_POS_CONTROLL',
+                                data : 'table',
+                                  }, 
+                                  tabbackgroundM_pos_controll : {
+                                    type : 'TABBACKGROUND_M_POS_CONTROLL',
+                                data : style_menu,
+                                  },
+                                  tabbackgroundT_pos_controll : {
+                                    type : 'TABBACKGROUND_T_POS_CONTROLL',
+                                data : style_table,
+                                  }
+                                }
+                        })
+              }
+                
+              } style = {this.props.pos.style_forListTable} >
                   <i class="fa fa-table" aria-hidden="true"></i> &nbsp;&nbsp; Phòng Bàn</a>
               </li>
               <li role="presentation">
@@ -88,13 +106,28 @@ class Tabs extends Component {
                    var style_table = {
                     backgroundColor : ''
                    }
-                                         this.setState({tab : 'menu',
-                                         style_forListMenu : style_menu,
-                                         style_forListTable : style_table
+                                      //    this.setState({tab : 'menu',
+                                      //    style_forListMenu : style_menu,
+                                      //    style_forListTable : style_table
   
-                                      });
-                                     
-              }}style = {this.state.style_forListMenu} >
+                                      // });
+                                      this.props.changeTab({
+                                        type : {
+                                          tab_pos_controll : {
+                                              type : 'TAB_POS_CONTROLL',
+                                              data : 'menu',
+                                                }, 
+                                                tabbackgroundM_pos_controll : {
+                                                  type : 'TABBACKGROUND_M_POS_CONTROLL',
+                                              data : style_menu,
+                                                },
+                                                tabbackgroundT_pos_controll : {
+                                                  type : 'TABBACKGROUND_T_POS_CONTROLL',
+                                              data : style_table,
+                                                }
+                                              }
+                                      })
+              }}style = {this.props.pos.style_forListMenu} >
                   <i class="fa fa-list-alt" aria-hidden="true"></i> &nbsp;&nbsp;
                     Thực Đơn</a>
               </li>
@@ -121,4 +154,22 @@ class Tabs extends Component {
   }
 }
 
-export default Tabs;
+const  mapStateToProps = state =>{
+  console.log(state);
+    return{
+	  pos: state.pos,
+	 
+    }
+  }
+
+const mapDispatchToProps = (dispatch, props) =>{
+  return {
+	changeTab: (action) =>{
+		dispatch(action)
+	},
+	
+  }
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Tabs);

@@ -8,7 +8,7 @@ import navigation_customer from './navigation_customer';
 import test from './loading'
 import * as form1 from './formtable';
 import * as form from './form';
-import redirect from './../redirect';
+import * as redirect from './../redirect';
 
 
 //Edit Type
@@ -22,7 +22,7 @@ import * as customer from './customer';
 import actionPrevent from './actionprevent';
 
 const appReducers = combineReducers({
-    redirect,
+    redirect : redirect.redirect,
     table : combineReducers({
         index : table.index,
         count : table.count,

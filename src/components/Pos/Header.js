@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import * as actionPos from '../../actions/pos';
 
 import * as action from '../../actions/pos';
 import {connect} from 'react-redux';
+import * as Feature from './../../actions/pos/feature'
 
 ///////
 
@@ -20,8 +22,48 @@ class Header extends Component {
 		 search : '',
 		};
 	  }
-	 
-		
+	  totalPrice = (list) =>{
+		var total = 0
+		console.log(list)
+		for(var i =0; i<list.length ; i++)
+		{
+			total = Number(list[i].TotalPrice) + Number(total)
+		}
+		return total;
+  
+	}
+	  appendTable = (id, guestMoney) =>{
+		var appendData = Feature.append(id, this.props.search_menu.search_menu, this.props.search_menu.show_list_table);
+
+		if(appendData == true)
+		{
+			return;
+		}
+		var oldData = [...this.props.search_menu.show_list_table]
+		console.log(oldData)
+		var pushToArray = oldData.push(appendData);
+		var totalPrice = this.totalPrice(oldData);
+		var extraMoney = Number(guestMoney) - Number(totalPrice);
+	
+	
+		this.props.append_Data({
+			type : {
+			   
+				feature_appendmenu : {
+					type : 'FEATURE_APPENDMENU',
+					data : oldData
+				  },
+				  payment_total: {
+					type : 'PAYMENT_TOTAL',
+					data : totalPrice
+					},
+					extra_money: {
+					  type : 'EXTRA_MONEY',
+					  data : extraMoney
+					  },
+			  }
+		})
+	}
    // console.log(this.props.history.match.params.id);
    showmenu = (menus, id) =>
     {
@@ -41,7 +83,9 @@ class Header extends Component {
 		{
 			return (
  
-				<div class="container-fluid style-of-container menu_hover" onMouseOver = {()=>{console.log('1')}} style = {
+				<div onClick = {()=>{
+					this.appendTable(menu.IdMenu, this.props.search_menu.guest_money)
+				}} class="container-fluid style-of-container menu_hover" onMouseOver = {()=>{console.log('1')}} style = {
 					{
 					border: "1px solid #ddd",
 					paddingRight : '0px',
@@ -69,7 +113,8 @@ class Header extends Component {
 		width: '60px',
 		marginTop: '5px',
 		marginBottom: '5px',
-		float : "right"}} src={menu.Images} alt=""/>
+		float : "right",
+		borderRadius: '5px'}} src={menu.Images} alt=""/>
 		
 		</div>
 		</div>
@@ -133,9 +178,14 @@ class Header extends Component {
 		// }
 		this.props.searchForMenu({data : data})
 	}
+	componentWillMount()
+	{
+this.props.getUser();
+	}
   render() 
   
   {
+	  console.log(this.props.search_menu)
     return (
      
 		<div className="position-fixed">
@@ -219,8 +269,13 @@ const  mapStateToProps = state =>{
 	  },
 	  valueDefaultNull : (action) =>{
 		  dispatch(action)
-	  }
-	 
+	  },
+	  append_Data : (action) =>{
+        dispatch(action)
+      },
+	 getUser : () =>{
+		 dispatch(actionPos.getUser())
+	 }
 	}
   }
   

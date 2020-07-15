@@ -4,6 +4,9 @@ html{
 .table td, .table th{
 	padding: 5px 10px;
 }
+body
+{
+}
 .mainwrap{
 	height:100vh;
 }
@@ -118,7 +121,9 @@ html{
 	color: #fff;
 }
 .margin-content{
-	margin-top: 70px;
+	margin-top: 50px;
+	background-color: #fceeee !important;
+
 }
 .color{
 	background-color: #fff;
@@ -193,13 +198,13 @@ html{
 	color: #fff;
 	font-size: 20px;
 }
-.set-border{
-	border-color: #F45564 !important;
-}
+
 .alert-login p{
 	color: #fff;
 } */
-
+.set-border{
+	margin-bottom: 10px;
+} 
 .header-admin{
 	background: #0B87C9;
 	 /* Fixed Sidebar (stay in place on scroll) */
@@ -287,7 +292,6 @@ html{
 .from{
 }
 .bill-detail-content{
-	height: 350px;
 	overflow:auto;
 }
 .bill-action .btn-pay{
@@ -354,7 +358,10 @@ html{
 	font-weight: bold;
 }
 .margin-bill-action{
-	margin-top: 30px;
+	margin-left: 0px;
+    /* border: 2px; */
+    border: #7b9beb solid 1px;
+    margin-right: 0px;
 }
 #result-customer{
 	display: none;
@@ -382,13 +389,12 @@ html{
 	background: #E7EAED;
 }
 #content-listmenu{
-	background-color:#efdbdb;
 }
 /* CSS POS */
 .header-cashier{
 	background:#0B87C9;
-	padding-top:10px;
-}
+    padding-top: 10px;
+    padding-bottom: 10px;}
 .header-cashier .tabs-list{
 	padding:0;
 	margin:0;
@@ -466,8 +472,18 @@ float: right;
 #pro_search_append .del-pro-order{
 	color: #F45564;
 	cursor: pointer;
+	transition: transform .2s;
+
+}
+#pro_search_append .del-pro-order:hover{
+	transform: scale(1.5) !important;
+
+
 }
 
+.hover-pos-del:hover {
+	transform: scale(1.5) !important;
+}
 .table-list .table-list-content ul li{
 	float: left;
 	line-height: 70px;
@@ -484,7 +500,7 @@ float: right;
 	transition: transform .2s;
 
 }
-.table-list .table-list-content ul li:hover{
+.table-list .table-list-content ul .hover-pos-list:hover{
 	/* .pos-list-table{
 		transition: transform .2s;
 	
@@ -498,10 +514,11 @@ float: right;
 	
 	 /* }  */
 }
+
 .table-list .table-list-content ul li.tb-active{
 	background:#FF5823;
 }
-.table-list .table-list-content ul li.tb-active :hover{
+.table-list .table-list-content ul li.tb-active:hover{
 	background-size: 100px;
 }
 .table-list .table-list-content ul li.inused{
@@ -513,7 +530,8 @@ float: right;
 	margin: 0;
 }
 .tablist-color{
-	background-color: #fceeee !important;
+	
+	height: 668px;
 }
 .float-pagination{
 	float : right;
@@ -665,7 +683,7 @@ display: none !important;
 {
 	color :#0094DA !important;
 }
-#format-select :disabled {
+#format-select:disabled {
 	background: #dddddd;
   }
   select[disabled='disabled'] {
@@ -714,16 +732,108 @@ display: none !important;
   #myUL li a:hover:not(.header) {
 	background-color: #eee; /* Add a hover effect to all links, except for headers */
   }
-  .child-of-listmenu :first-child{
+  .child-of-listmenu:first-child{
 	  border-top-right-radius: 5px;
 	  border-top-left-radius: 5px;
 
   }
-  .child-of-listmenu :last-child{
+  .child-of-listmenu:last-child{
 	border-bottom-right-radius: 5px;
 	border-bottom-left-radius: 5px;
 
 }
-.menu_hover :hover {
-	background-color: #a56969;
+.menu_hover:hover{
+	background-color: #a56969 !important;
+	
 }
+.table-pos tbody td {
+	border: 1px solid rgb(224, 216, 216);
+}
+.table-pos tbody:first-child{
+	border-top-left-radius: 20px;
+}
+.table-pos thead th {
+		border: 1px solid black !important;
+	}
+	.modal-confirm {		
+		color: #636363;
+		width: 400px;
+	}
+	.modal-confirm .modal-content {
+		padding: 20px;
+		border-radius: 5px;
+		border: none;
+		text-align: center;
+		font-size: 14px;
+	}
+	.modal-confirm .modal-header {
+		border-bottom: none;   
+		position: relative;
+	}
+	.modal-confirm h4 {
+		text-align: center;
+		font-size: 26px;
+		margin: 30px 0 -10px;
+	}
+	.modal-confirm .close {
+		position: absolute;
+		top: -5px;
+		right: -2px;
+	}
+	.modal-confirm .modal-body {
+		color: #999;
+	}
+	.modal-confirm .modal-footer {
+		border: none;
+		text-align: center;		
+		border-radius: 5px;
+		font-size: 13px;
+		padding: 10px 15px 25px;
+	}
+	.modal-confirm .modal-footer a {
+		color: #999;
+	}		
+	.modal-confirm .icon-box {
+		width: 80px;
+		height: 80px;
+		margin: 0 auto;
+		border-radius: 50%;
+		z-index: 9;
+		text-align: center;
+		border: 3px solid #f15e5e;
+	}
+	.modal-confirm .icon-box i {
+		color: #f15e5e;
+		font-size: 46px;
+		display: inline-block;
+		margin-top: 13px;
+	}
+	.modal-confirm .btn, .modal-confirm .btn:active {
+		color: #fff;
+		border-radius: 4px;
+		background: #60c7c1;
+		text-decoration: none;
+		transition: all 0.4s;
+		line-height: normal;
+		min-width: 120px;
+		border: none;
+		min-height: 40px;
+		border-radius: 3px;
+		margin: 0 5px;
+	}
+	.modal-confirm .btn-secondary {
+		background: #c1c1c1;
+	}
+	.modal-confirm .btn-secondary:hover, .modal-confirm .btn-secondary:focus {
+		background: #a8a8a8;
+	}
+	.modal-confirm .btn-danger {
+		background: #f15e5e;
+	}
+	.modal-confirm .btn-danger:hover, .modal-confirm .btn-danger:focus {
+		background: #ee3535;
+	}
+	.trigger-btn {
+		display: inline-block;
+		margin: 100px auto;
+	}

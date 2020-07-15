@@ -139,13 +139,16 @@ router.post('/query/searchdata',(req, res, next)=>{
             if(typeof result[0].UserId != "undefined")
             {
                 const user = {
-                   email: result[0].Email,
-                   name : result[0].UserName
+                   name : result[0].UserName,
+                   id_staff : result[0].id_staff
                   }
                   const token = jwt.sign(user, 'shhhhh', {
                     expiresIn: "30000000",
                   });
-                  res.send({token : token})
+                  res.send({
+                      token : token,
+                      user : result
+                    })
             }
         }
             else

@@ -49,12 +49,12 @@ componentWillMount()
         if(typeof res.data.token != 'undefined')
         {
             document.cookie = res.data.token
-            callback(true)
+            callback(true,res.data.user[0])
             
         }
         else
         {
-            callback(false)
+            callback(false,null)
 
             var alert = {...this.state.alert};
             alert.display = '';
@@ -123,13 +123,17 @@ componentWillMount()
                     </svg>
                     <input type="password" name = 'passWord' onChange = {(e)=>{this.onchange(e)}} class="login__input pass" placeholder="Password" value = {this.state.passWord}/>
                 </div>
-                <button onClick = {()=>{this.submit((data)=>{
+                <button onClick = {()=>{this.submit((data,user)=>{
                     this.props.redirect_func({
                         type :{
                             redirect : {
                                 type : 'REDIRECT_PAGES',
                                 data : data
 
+                            },
+                            get_idUser : {
+                                type : 'GET_ID_USER',
+                                data : user
                             }
                         }
                     })

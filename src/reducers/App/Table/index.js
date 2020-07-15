@@ -5,7 +5,7 @@ import stttable from './stttable';
 import * as event from './eventtable';
 import navigation from './navigation';
 import * as form from './formtable';
-import redirect from './../redirect';
+import * as redirect from './../redirect';
 import * as modal from './modal'
 import * as formRoom from './formroom'
 import styleEvent from './styleevent'
@@ -14,7 +14,7 @@ import * as table from './table';
 import actionPrevent from './actionprevent';
 
 const appReducers = combineReducers({
-    redirect,
+    redirect : redirect.redirect,
     table : combineReducers({
         index : table.index,
         count : table.count,

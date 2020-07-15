@@ -4,7 +4,8 @@ module.exports.pool = mysql.createPool({
   host: "localhost",
   user: "root",
   password: "",
-  database : "emyshop"
+  database : "emyshop",
+  multipleStatements: true
 })
 
 

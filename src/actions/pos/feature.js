@@ -1,5 +1,5 @@
 export const append = (id, list, listMenu)=>{
-    console.log(listMenu);
+    console.log(list);
     if(checkExsit(id,listMenu))
     {
         return true
@@ -20,7 +20,27 @@ export const append = (id, list, listMenu)=>{
         }
     }
 }
+export const appendCustomer = (id, list, listCustomer)=>{
+    console.log(list);
+    if(checkExsit(id,listCustomer))
+    {
+        return true
+    }
+    for(var i = 0; i< list.length;i++)
+    {
+        
+        if(list[i].IdCustomer == id)
+        {
+            var customer = {};
+            customer.IdCustomer = list[i].IdCustomer;
+            customer.CustomerName = list[i].CustomerName;
+            customer.PhoneNumber = list[i].PhoneNumber;
+            customer.Address = list[i].Address;
 
+            return customer
+        }
+    }
+}
 
 export const changequantity = (id, value, list) =>{
     console.log(value)
