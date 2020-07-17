@@ -157,13 +157,13 @@ router.post('/getlistbilldetail', function(req, res, next) {
            " VALUES (null, '"+id+"', '"+data.IdUser+"', '"+data.table.IdTable+"', "+logic.parseNullToString(data.customer.IdCustomer)+", current_timestamp(), '0', '0', '"+data.totalprice+"', 'noteeee');",(err,result)=>{
             if(err)
             {
-                console.log(err)
+                res.send({status : 'err'});
                 return;
             }
             conn.query("SELECT IdBill FROM bill WHERE id = '"+id+"'",(err_,result_)=>{
                 if(err_)
                 {
-                    console.log(err_);
+                    res.send({status : 'err'});
                     return;
                 }
                 console.log(result_);
@@ -176,7 +176,7 @@ router.post('/getlistbilldetail', function(req, res, next) {
                 conn.query(stringSql,(err__, result__)=>{
                     if(err__)
                     {
-                        console.log(err__);
+                        res.send({status : 'err'});
                         return;
                     }
                     res.send({status : 'success'});
@@ -194,7 +194,7 @@ router.post('/getlistbilldetail', function(req, res, next) {
        conn.query("UPDATE `bill` SET `Totalprice` = '"+data.totalprice+"', `Note` = 'noteeeee', `IdCustomer` = "+logic.parseNullToString(data.customer.IdCustomer)+" WHERE `bill`.`IdBill` = "+data.id+";",(err_,result_)=>{
         if(err_)
         {
-            console.log(err_);
+            res.send({status : 'err'});
             return;
         }
         var stringSql = '';
@@ -205,30 +205,19 @@ router.post('/getlistbilldetail', function(req, res, next) {
         conn.query("DELETE FROM billdetail WHERE IdBill = "+data.id+"; "+stringSql+"",(err__, result__)=>{
             if(err__)
             {
-                console.log(err__);
-                return;
+                res.send({status : 'err'});
+            return;
             }
+            res.send({status : 'success'});
+            return;
            
 
         })
        })
        }
     });  
-    // function x()
-    // {
-    //     return function(x,y)
-    //     {
-    //         console.log('2')
-
-    //         return function()
-    //         {
-    //             console.log(y)
-    //             return x1=1;
-    //         }
-    //     }
-    // }
-    // var z = x()()();
-    // console.log(z);
+    
+   
     router.get('/getuser', function(req, res, next) {
         var accsessToken= req.headers.cookie;
      jwt.verify(accsessToken, 'shhhhh', (err, decode)=>{
@@ -240,7 +229,6 @@ router.post('/getlistbilldetail', function(req, res, next) {
     });
     
     });
-
     router.post('/deletemenuofpos', function(req, res, next) {
       conn.query("DELETE FROM billdetail WHERE IdDetail = '"+req.body.data+"'",(err,result)=>{
         if(err)
@@ -252,4 +240,61 @@ router.post('/getlistbilldetail', function(req, res, next) {
       })
     
     });
+
+
+    router.post('/paymentpos', function(req, res, next) {
+        var data = req.body;
+        var id = getDatetimeNow()
+       console.log(logic.parseNullToString(data.customer.IdCustomer))
+        if(data.id == null)
+        {
+ 
+            conn.query("INSERT INTO `bill` (`IdBill`, `id`, `IdUser`, `IdTable`, `IdCustomer`, `create_at`, `Sale`, `idStatus`, `Totalprice`, `Note`) "+
+            " VALUES (null, '"+id+"', '"+data.IdUser+"', '"+data.table.IdTable+"', "+logic.parseNullToString(data.customer.IdCustomer)+", current_timestamp(), '0', '1', '"+data.totalprice+"', 'noteeee');",(err,result)=>{
+             if(err)
+             {
+                 res.send({status : 'err'});
+                 return;
+             }
+             conn.query("SELECT IdBill FROM bill WHERE id = '"+id+"'",(err_,result_)=>{
+                 if(err_)
+                 {
+                     res.send({status : 'err'});
+                     return;
+                 }
+                 console.log(result_);
+                 var stringSql = '';
+                 data.menu.forEach((value,index)=>{
+                 stringSql = stringSql + "INSERT INTO `billdetail` (`IdDetail`, `IdBill`, `IdMenu`, `Quantity`, `Price`) VALUES (NULL, '"+result_[0].IdBill+"', '"+value.IdMenu+"', '"+value.Quantity+"', '"+value.Price+"');" ;
+                 })
+                 console.log(stringSql);
+ 
+                 conn.query(stringSql,(err__, result__)=>{
+                     if(err__)
+                     {
+                         res.send({status : 'err'});
+                         return;
+                     }
+                     res.send({status : 'success'});
+                     return;
+                 })
+ 
+             })
+ 
+            })
+          return;
+        }
+        else
+        {
+            console.log('update');
+        conn.query("UPDATE `bill` SET `idStatus` = '1' WHERE `bill`.`IdBill` = "+data.id+";",(err_,result_)=>{
+         if(err_)
+         {
+             res.send({status : 'err'});
+             return;
+         }
+         res.send({status : 'success'});
+         return;        })
+        }
+     }); 
 module.exports = router;

@@ -837,3 +837,7 @@ display: none !important;
 		display: inline-block;
 		margin: 100px auto;
 	}
+	.alert-position
+	{
+		top : 65px
+	}

@@ -145,12 +145,17 @@ export const fetchAlldataofPos = (data) => {
            {
                return;
            }
-          console.log(res);
+           var customer = [...res.data.customer];
+          if(typeof res.data.customer[0] == 'undefined')
+          {
+            customer[0] = {};
+          }
+          
           next({type : {
            
             show_customer_pos : {
                 type : 'SHOW_CUSTOMER_POS',
-                data : res.data.customer[0]
+                data : customer[0],
               },
               feature_appendmenu : {
                   type : 'FEATURE_APPENDMENU',
@@ -213,46 +218,161 @@ export const insertBillrequest = (data) => {
            {
                if(res.data.status = 'success')
                {
-                var style_menu = {
-                    backgroundColor :''
-                   }
-                   var style_table = {
-                    backgroundColor : '#eb9898'
-                   }
-                    // this.setState({tab : 'table',
-                    // style_forListMenu : style_menu,
-                    // style_forListTable : style_table
-                    //               });
-    next({
-      type : {
-        tab_pos_controll : {
-            type : 'TAB_POS_CONTROLL',
-            data : 'table',
-              }, 
-              tabbackgroundM_pos_controll : {
-                type : 'TABBACKGROUND_M_POS_CONTROLL',
-            data : style_menu,
-              },
-              tabbackgroundT_pos_controll : {
-                type : 'TABBACKGROUND_T_POS_CONTROLL',
-            data : style_table,
-              }
-            }
-    })
-               }
-               else
-               {
 
+                if(data.id == null)
+                {
+                   
+                
+    
+                     
+        next({
+          type : {status_event :{
+            type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
+            status:{
+                status : 'success',
+                classcomponent : 'alert alert-success',
+                text : 'Lưu dữ liệu thành công',
+                display : 'show-alert'
+            }
+        },
+            tab_pos_controll : {
+                type : 'TAB_POS_CONTROLL',
+                data : 'table',
+                  }, 
+                 
+                  show_customer_pos : {
+                    type : 'SHOW_CUSTOMER_POS',
+                    data : [{}],
+                  },
+                  feature_appendmenu : {
+                      type : 'FEATURE_APPENDMENU',
+                      data :  []
+                  },
+                  payment_total : {
+                    type : 'PAYMENT_TOTAL',
+                    data :  0
+                  },
+                  show_table_pos : {
+                      type : 'SHOW_TABLE_POS',
+                      data : {}
+                  },
+                  guest_money : {
+                    type : 'GUEST_MONEY',
+                    data : 0
+                  },
+                  extra_money : {
+                    type : 'EXTRA_MONEY',
+                    data : 0 
+                  },
+                  
+                    idbill_default_pos : {
+                        type : 'IDBILL_POS_DEFAULT',
+                        data : null
+                    },
+                tabbackgroundM_pos_controll : {
+                        type : 'TABBACKGROUND_M_POS_CONTROLL',
+                    data : {
+                        backgroundColor :''
+                       },
+                      },
+                      tabbackgroundT_pos_controll : {
+                        type : 'TABBACKGROUND_T_POS_CONTROLL',
+                    data : {
+                        backgroundColor : '#eb9898'
+                       },
+                      }
+                 
+                }
+        })
+        setTimeout(function(){
+   
+   
+   
+          next({type : {status_event :{
+              type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
+              status:{
+                  status : 'success',
+                  classcomponent : 'alert alert-success',
+                  text : 'Thêm mới dữ liệu thành công ^-^',
+                  display : 'hide-alert'
+              }
+          }}})
+
+      }, 2000);
+                return;
+                }
+                var newProps = data.confirm;;
+               newProps.display = 'none';
+                next({
+                    type : {status_event :{
+                      type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
+                      status:{
+                          status : 'success',
+                          classcomponent : 'alert alert-success',
+                          text : 'Lưu dữ liệu thành công',
+                          display : 'show-alert'
+                      }
+                  },
+                            confirm_pos : {
+                              type: 'CONFIRM_POS',
+                              data : newProps
+                            }
+                          }
+                  })
+
+                
+                  setTimeout(function(){
+   
+   
+   
+                    next({type : {status_event :{
+                        type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
+                        status:{
+                            status : 'success',
+                            classcomponent : 'alert alert-success',
+                            text : 'Thêm mới dữ liệu thành công ^-^',
+                            display : 'hide-alert'
+                        }
+                    }}})
+    
+                }, 2000);
+
+
+   
+                return;
                }
+               next({
+                 type :{
+                  status_event :{
+                    type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
+                    status:{
+                        status : 'success',
+                        classcomponent : 'alert alert-success',
+                        text : 'Lưu dữ liệu thành công',
+                        display : 'show-alert'
+                    }
+                },
+                 }
+               })
+               setTimeout(function(){
+   
+   
+   
+                next({type : {status_event :{
+                    type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
+                    status:{
+                        status : 'success',
+                        classcomponent : 'alert alert-success',
+                        text : 'Thêm mới dữ liệu thành công ^-^',
+                        display : 'hide-alert'
+                    }
+                }}})
+
+            }, 2000);
+             
            }
           console.log(res);
-        //   next({type : {
-           
-        //       get_list_table : {
-        //         type : 'GET_LIST_TABLES',
-        //         data : res.data.table
-        //       }
-        //   }});
+      
        });
 
    };
@@ -313,4 +433,106 @@ export const getUser = () => {
        });
 
    };
+}
+export const paymentPosRequest = (data,type,confirm) => {
+   
+  return (next, getstate, extra) =>{
+
+      callApi('pos/paymentpos', 'post',data ).then(res =>{
+         if(res == false)
+         {
+             return;
+         }
+         if(type)
+         {
+          var newProps = {...confirm};
+          newProps.display = 'none';
+          newProps.type = null;
+           next({
+            type : {
+              status_event :{
+                type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
+                status:{
+                    status : 'success',
+                    classcomponent : 'alert alert-success',
+                    text : 'Lưu dữ liệu thành công',
+                    display : 'show-alert'
+                }
+            },
+              confirm_pos : {
+                type: 'CONFIRM_POS',
+                data : newProps
+              },
+              tab_pos_controll : {
+                  type : 'TAB_POS_CONTROLL',
+                  data : 'table',
+                    }, 
+                   
+                    show_customer_pos : {
+                      type : 'SHOW_CUSTOMER_POS',
+                      data : [{}],
+                    },
+                    feature_appendmenu : {
+                        type : 'FEATURE_APPENDMENU',
+                        data :  []
+                    },
+                    payment_total : {
+                      type : 'PAYMENT_TOTAL',
+                      data :  0
+                    },
+                    show_table_pos : {
+                        type : 'SHOW_TABLE_POS',
+                        data : {}
+                    },
+                    guest_money : {
+                      type : 'GUEST_MONEY',
+                      data : 0
+                    },
+                    extra_money : {
+                      type : 'EXTRA_MONEY',
+                      data : 0 
+                    },
+                    
+                      idbill_default_pos : {
+                          type : 'IDBILL_POS_DEFAULT',
+                          data : null
+                      },
+                  tabbackgroundM_pos_controll : {
+                          type : 'TABBACKGROUND_M_POS_CONTROLL',
+                      data : {
+                          backgroundColor :''
+                         },
+                        },
+                        tabbackgroundT_pos_controll : {
+                          type : 'TABBACKGROUND_T_POS_CONTROLL',
+                      data : {
+                          backgroundColor : '#eb9898'
+                         },
+                        }
+                   
+                  }
+           })
+           setTimeout(function(){
+   
+   
+   
+            next({type : {status_event :{
+                type : 'STATUS_EVENT_UPDATE_DELETE_INSERT',
+                status:{
+                    status : 'success',
+                    classcomponent : 'alert alert-success',
+                    text : 'Thêm mới dữ liệu thành công ^-^',
+                    display : 'hide-alert'
+                }
+            }}})
+  
+        }, 2000);
+         }
+        
+     
+        
+    
+     });
+
+ };
 }

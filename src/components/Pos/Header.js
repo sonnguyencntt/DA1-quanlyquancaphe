@@ -4,6 +4,7 @@ import * as actionPos from '../../actions/pos';
 import * as action from '../../actions/pos';
 import {connect} from 'react-redux';
 import * as Feature from './../../actions/pos/feature'
+import Alert from './../Table/Alert'
 
 ///////
 
@@ -189,6 +190,8 @@ this.props.getUser();
     return (
      
 		<div className="position-fixed">
+			          <Alert/>
+
 		 	<div id="topsidebar">
 	   <nav class="navbar navbar-color" role="navigation">
 		   <div class="navbar-header">

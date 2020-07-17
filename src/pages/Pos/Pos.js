@@ -59,24 +59,7 @@ class Pos extends Component {
 	)
  }
  deleteMenu = (id, list, guestMoney) =>{
-	 if(this.props.feature.idbill_default != null)
-	 {
-		 var newProps = {...this.props.feature.confirm};
-		 newProps.icon = 'fa fa-times';
-		 newProps.modalBody = "Bạn có thật sự muốn xoá dữ liệu này ? Dữ liệu bị xoá sẽ bị mất ngay lập tức và không thể khôi phục";
-		 newProps.display = 'block';
-		 newProps.data = id;
-		 
-		this.props.confirm({
-			type : {
-				confirm_pos : {
-				type: 'CONFIRM_POS',
-				data : newProps
-			}
-			}
-		})
-		return;
-	 }
+	
 	var newValue = Feature.deleteMenu(id ,  list);
 	var totalPrice = this.totalPrice(newValue);
 	var extraMoney = Number(guestMoney) - Number(totalPrice);

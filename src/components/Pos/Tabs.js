@@ -18,21 +18,7 @@ import { connect } from 'react-redux';
 
 ///////////
 class Tabs extends Component {
-  constructor(props) {
-    super(props);
-  
-    this.state = {
-      // style_forListTable : {
-      //   backgroundColor : '#eb9898',
-      // },
-      // style_forListMenu : {
-      //   backgroundColor : '',
-      // },
-      // tab : 'table'
-    };
-  }
-   // console.log(this.props.history.match.params.id);
-  showTab = ()=>{
+    showTab = ()=>{
     if(this.props.pos.tab_controll == 'table')
     {
       return(
@@ -55,7 +41,6 @@ class Tabs extends Component {
   }
   render() 
   {
-    console.log(this.state.tab)
 
     return (
      

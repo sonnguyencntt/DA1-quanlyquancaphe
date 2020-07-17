@@ -89,17 +89,7 @@ class NumberTable extends Component {
       );
      })
    }
-   else
-   {
-     var Undefined_ = [];
-     for(var i = 0; i< 8 ; i++)
-     {
-      Undefined_[i] = 	<li  onclick="cms_load_pos()">Undefined!!!!</li>
-        
-     }
-     result = Undefined_
-    return result
-   }
+  
    return result;
    };
 

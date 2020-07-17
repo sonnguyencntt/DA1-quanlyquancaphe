@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 
 import * as action from '../../actions/pos';
-
+import Print from './Printbill'
+import Alert from './../Customer/Alert'
 
 ///////
 
@@ -113,9 +114,7 @@ class Menu extends Component {
     
    }
  
-  componentDidMount(){
-    
-  }
+  
   render() 
   
   {
@@ -149,7 +148,9 @@ const mapDispatchToProps = (dispatch, props) =>{
 }
 const  mapStateToProps = state =>{
 	return{
-	 area : state.pos
+   area : state.pos,
+   status : state.customer.status
+
 	}
   };
 export default connect(mapStateToProps,mapDispatchToProps)(Menu);

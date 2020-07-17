@@ -8,6 +8,11 @@ const confirm = {
     data : '',
     //"Bạn có thật sự muốn xoá dữ liệu này ? Dữ liệu bị xoá sẽ bị mất và không thể khôi phục."
     type : null,
+    btnRight : 'Agree',
+    btnLeft : 'Cancel',
+    title : 'Bạn có chắc chắn ?',
+    content : '"Bạn có thật sự muốn xoá dữ liệu này ? Dữ liệu bị xoá sẽ bị mất và không thể khôi phục.',
+
 };
 
 
